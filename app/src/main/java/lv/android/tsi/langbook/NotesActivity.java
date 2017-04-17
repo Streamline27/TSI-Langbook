@@ -35,8 +35,7 @@ public class NotesActivity extends AppCompatActivity implements NotesFragment.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSupportFragmentManager().beginTransaction()
-                                   .add(R.id.note_fragment_container, new NotesFragment())
-                                   .addToBackStack(null).commit();
+                                   .add(R.id.note_fragment_container, new NotesFragment()).commit();
     }
 
     @Override
