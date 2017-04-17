@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="scroolColor">#FFF</color>
+    <color name="hiddenColor">#acacac</color>
+    <color name="onPrimaryDarkColor">#FFF</color>
+    <color name="black">#000</color>
+    <color name="white">#FFF</color>
 </resources>
