@@ -40,7 +40,7 @@ public class NotesFragment extends Fragment {
         this.notes = getMockContent();
 
         this.adapter = new NotesAdapter(getContext(), notes);
-        this.mNotesListView.addHeaderView(listViewHeader);
+        this.mNotesListView.addHeaderView(listViewHeader, null, false);
         this.mNotesListView.setOnItemClickListener(this::onNoteItemClick);
         this.mNotesListView.setAdapter(adapter);
 
