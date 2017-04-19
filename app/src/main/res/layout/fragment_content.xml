@@ -1,4 +1,50 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:text="@string/hello_blank_fragment"/>
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/header_content"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/content_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/FullWidthEditText"
+                    android:inputType="textMultiLine"
+                    android:focusable="false"
+                    android:text="@string/mockText"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="58dp" />
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/content_edit_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@mipmap/edit_mode_img" />
+
+    </FrameLayout>
+
+
+
+
+</LinearLayout>

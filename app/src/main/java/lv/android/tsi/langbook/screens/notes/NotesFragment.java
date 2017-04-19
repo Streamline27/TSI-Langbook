@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class NotesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
         View listViewHeader = inflater.inflate(R.layout.header_notes, null, false);
+        setHasOptionsMenu(true);
 
         this.unbinder = ButterKnife.bind(this, view);
 
@@ -59,6 +61,17 @@ public class NotesFragment extends Fragment {
         unbinder.unbind();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) ((OnNoteSelectedListener)getActivity()).onUpButtonPressed();
+        return true;
+
+    }
+
+
+
     public List<Note> getMockContent() {
         List<Note> noteMocks = new ArrayList<>();
         for (int i = 0; i < 10; i++) noteMocks.add(new Note(Integer.toString(i)));
@@ -67,6 +80,7 @@ public class NotesFragment extends Fragment {
 
     public interface OnNoteSelectedListener{
         void onNoteSelected();
+        void onUpButtonPressed();
     }
 
 }

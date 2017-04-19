@@ -20,7 +20,7 @@ import lv.android.tsi.langbook.domain.Dictionary;
 
 public class DictionariesFragment extends Fragment {
 
-    @BindView(R.id.dictionaries_list_view) ListView mdDctionaryView;
+    @BindView(R.id.dictionaries_list_view) ListView mdDctionariesListView;
     private Unbinder unbinder;
 
     private DictionariesAdapter adapter;
@@ -37,12 +37,27 @@ public class DictionariesFragment extends Fragment {
         dictionaries = getMockContent();
 
         adapter = new DictionariesAdapter(getContext(), dictionaries);
-        mdDctionaryView.setAdapter(adapter);
-        mdDctionaryView.setOnItemClickListener(this::onDictionaryItemSelectedAction);
+        mdDctionariesListView.setAdapter(adapter);
+        mdDctionariesListView.setOnItemClickListener(this::onDictionaryItemSelectedAction);
+        mdDctionariesListView.setVerticalScrollBarEnabled(true);
 
         return view;
 
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mdDctionariesListView.setVerticalScrollBarEnabled(false);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        mdDctionariesListView.setVerticalScrollBarEnabled(true);
+    }
+
+
 
     @Override
     public void onDestroyView() {
@@ -53,6 +68,7 @@ public class DictionariesFragment extends Fragment {
     private void onDictionaryItemSelectedAction(AdapterView<?> parent, View view, int position, long id){
         OnDictionarySelectedListener activity = (OnDictionarySelectedListener) getActivity();
         activity.onDictionarySelected(dictionaries.get(position));
+
     }
 
 

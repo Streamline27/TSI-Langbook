@@ -1,26 +1,30 @@
 package lv.android.tsi.langbook;
 
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
-import android.widget.FrameLayout;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lv.android.tsi.langbook.domain.Dictionary;
 import lv.android.tsi.langbook.screens.content.ContentFragment;
 import lv.android.tsi.langbook.screens.notes.NotesFragment;
 
-public class NotesActivity extends AppCompatActivity implements NotesFragment.OnNoteSelectedListener {
+import static lv.android.tsi.langbook.screens.content.ContentFragmentExportUtils.setActionBarHomeButtonIconOkMark;
+import static lv.android.tsi.langbook.screens.content.ContentFragmentExportUtils.setActionBarHomeButtonIconDefault;
+import static lv.android.tsi.langbook.utilities.AnimationUtilities.setPendingTransitionAnimationNone;
+
+public class NotesActivity extends AppCompatActivity implements NotesFragment.OnNoteSelectedListener,
+                                                                ContentFragment.OnEditButtonClickListener {
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
 
+    @BindString(R.string.title_fragment_notes) String NOTES_TITLE;
+    @BindString(R.string.title_mode_edit) String EDIT_MODE_TITLE;
+
     private Dictionary dictionary;
 
-    private String notesFragmentTag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,18 +34,13 @@ public class NotesActivity extends AppCompatActivity implements NotesFragment.On
         ButterKnife.bind(this);
 
         dictionary =  (Dictionary) getIntent().getSerializableExtra(Constants.DICTIONARY_EXTRA_KEY);
-        mToolbar.setTitle("Notes");
+
+        mToolbar.setTitle(NOTES_TITLE);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getSupportFragmentManager().beginTransaction()
-                                   .add(R.id.note_fragment_container, new NotesFragment()).commit();
-    }
+        getSupportFragmentManager().beginTransaction().add(R.id.note_fragment_container, new NotesFragment()).commit();
 
-    @Override
-    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
-        getSupportActionBar().setElevation(0);
     }
 
     @Override
@@ -52,4 +51,36 @@ public class NotesActivity extends AppCompatActivity implements NotesFragment.On
                 .commit();
     }
 
+    @Override
+    public void onContentEditModeToggledOn() {
+        setActionBarTitle(EDIT_MODE_TITLE);
+        setActionBarHomeButtonIconOkMark(this);
+    }
+
+    @Override
+    public void onContentEditModeToggledOff() {
+        setActionBarTitle(NOTES_TITLE);
+        setActionBarHomeButtonIconDefault(this);
+    }
+
+    @Override
+    public void onUpButtonPressed() {
+        finish();
+        setPendingTransitionAnimationNone(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setPendingTransitionAnimationNone(this);
+    }
+
+
+    /**
+        Helper methods
+     */
+
+    private void setActionBarTitle(String title){
+        mToolbar.setTitle(title);
+    }
 }
