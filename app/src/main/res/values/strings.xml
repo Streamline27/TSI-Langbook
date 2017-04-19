@@ -1,11 +1,27 @@
 <resources>
     <string name="app_name">Langbook</string>
 
+    <!-- Activity titles -->
     <string name="title_fragment_dictionaries">Dictionaries</string>
     <string name="title_fragment_notes">Notes</string>
     <string name="title_mode_edit">Edit</string>
 
+    <!-- Action bar button names -->
     <string name="action_settings">Settings</string>
 
+    <string name="action_add_dictionary">Add dictionary</string>
+    <string name="action_add_note">Add note</string>
+
+    <!-- AlertDialog strings -->
+    <string name="dialog_title_default">Create a new item</string>
+    <string name="dialog_positive_caption">Create</string>
+    <string name="dialog_negative_caption">Cancel</string>
+
+    <string name="dialog_title_dictionaries">Create a new dictionary</string>
+    <string name="dialog_title_notes">Create a new note</string>
+
+
+    <!-- For testing reasons -->
     <string name="mockText">Он говорил на том изысканном французском языке, на котором не только говорили, но и думали наши деды, и с теми, тихими, покровительственными интонациями, которые свойственны состаревшемуся в свете и при дворе значительному человеку. Он подошел к Анне Павловне, поцеловал ее руку, подставив ей свою надушенную и сияющую лысину, и покойно уселся на диване.\n Он говорил на том изысканном французском языке, на котором не только говорили, но и думали наши деды, и с теми, тихими, покровительственными интонациями, которые свойственны состаревшемуся в свете и при дворе значительному человеку. Он подошел к Анне Павловне, поцеловал ее руку, подставив ей свою надушенную и сияющую лысину, и покойно уселся на диване. \n Он говорил на том изысканном французском языке, на котором не только говорили, но и думали наши деды, и с теми, тихими, покровительственными интонациями, которые свойственны состаревшемуся в свете и при дворе значительному человеку. Он подошел к Анне Павловне, поцеловал ее руку, подставив ей свою надушенную и сияющую лысину, и покойно уселся на диване. \n Он говорил на том изысканном французском языке, на котором не только говорили, но и думали наши деды, и с теми, тихими, покровительственными интонациями, которые свойственны состаревшемуся в свете и при дворе значительному человеку. Он подошел к Анне Павловне, поцеловал ее руку, подставив ей свою надушенную и сияющую лысину, и покойно уселся на диване.</string>
+
 </resources>

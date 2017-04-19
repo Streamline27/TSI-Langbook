@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +18,9 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import lv.android.tsi.langbook.R;
 
-import static lv.android.tsi.langbook.utilities.DelayUtilities.makeVisibleAfterDelay;
-import static lv.android.tsi.langbook.utilities.KeyboardUtilities.hideKeyboard;
-import static lv.android.tsi.langbook.utilities.KeyboardUtilities.showKeyBoard;
+import static lv.android.tsi.langbook.utilities.functions.DelayUtilities.makeVisibleAfterDelay;
+import static lv.android.tsi.langbook.utilities.functions.KeyboardUtilities.hideKeyboard;
+import static lv.android.tsi.langbook.utilities.functions.KeyboardUtilities.showKeyBoard;
 
 public class ContentFragment extends Fragment {
 
@@ -54,6 +56,10 @@ public class ContentFragment extends Fragment {
         editModeEnabled = true;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_content, menu);
+    }
 
     @Override
     public void onDestroyView() {

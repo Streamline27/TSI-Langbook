@@ -25,7 +25,7 @@
                     android:inputType="textMultiLine"
                     android:focusable="false"
                     android:text="@string/mockText"/>
-                <View
+                <Space
                     android:layout_width="match_parent"
                     android:layout_height="58dp" />
 

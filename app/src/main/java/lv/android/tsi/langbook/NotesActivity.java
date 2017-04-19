@@ -10,10 +10,11 @@ import butterknife.ButterKnife;
 import lv.android.tsi.langbook.domain.Dictionary;
 import lv.android.tsi.langbook.screens.content.ContentFragment;
 import lv.android.tsi.langbook.screens.notes.NotesFragment;
+import lv.android.tsi.langbook.utilities.Constants;
 
 import static lv.android.tsi.langbook.screens.content.ContentFragmentExportUtils.setActionBarHomeButtonIconOkMark;
 import static lv.android.tsi.langbook.screens.content.ContentFragmentExportUtils.setActionBarHomeButtonIconDefault;
-import static lv.android.tsi.langbook.utilities.AnimationUtilities.setPendingTransitionAnimationNone;
+import static lv.android.tsi.langbook.utilities.functions.AnimationUtilities.setPendingTransitionAnimationNone;
 
 public class NotesActivity extends AppCompatActivity implements NotesFragment.OnNoteSelectedListener,
                                                                 ContentFragment.OnEditButtonClickListener {

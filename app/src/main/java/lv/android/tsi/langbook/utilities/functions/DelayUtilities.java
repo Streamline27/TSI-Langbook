@@ -1,4 +1,4 @@
-package lv.android.tsi.langbook.utilities;
+package lv.android.tsi.langbook.utilities.functions;
 
 import android.os.Handler;
 import android.view.View;

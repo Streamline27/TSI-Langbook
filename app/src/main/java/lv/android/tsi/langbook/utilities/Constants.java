@@ -1,4 +1,4 @@
-package lv.android.tsi.langbook;
+package lv.android.tsi.langbook.utilities;
 
 /**
  * Created by Vladislav on 17.04.2017.
