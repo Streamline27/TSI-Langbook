@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/dictionary_item"
+    android:id="@+id/note_item"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,7 +15,8 @@
         android:tint="@color/colorPrimaryDark"
         android:src="@mipmap/page_img"/>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_vertical">
@@ -37,6 +38,16 @@
 
         </LinearLayout>
 
+
     </LinearLayout>
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/item_select_msrker"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:tint="@color/colorPrimaryDark"
+        android:src="@mipmap/selected_img"/>
 
 </LinearLayout>

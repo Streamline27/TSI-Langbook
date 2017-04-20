@@ -22,8 +22,6 @@ public class CreateDialogBuilder {
     @BindView(R.id.dialog_title_text)    TextView mTitleTextView;
 
     @BindString(R.string.dialog_title_default) String title;
-    @BindString(R.string.dialog_positive_caption) String positiveButtonCaption;
-    @BindString(R.string.dialog_negative_caption) String negativeButtonCaption;
 
     private Context ctx;
     private View view;
@@ -48,8 +46,7 @@ public class CreateDialogBuilder {
         AlertDialog dialog = new AlertDialog.Builder(ctx).create();
 
         mTitleTextView.setText(title);
-        mCreateTextView.setText(positiveButtonCaption);
-        mCancelTextView.setText(negativeButtonCaption);
+
         mCreateTextView.setOnClickListener(v -> { this.positiveButtonClickListener.onClick(view); dialog.dismiss(); });
         mCancelTextView.setOnClickListener(v -> dialog.dismiss());
 
@@ -67,4 +64,5 @@ public class CreateDialogBuilder {
         this.positiveButtonClickListener = positiveButtonClickListener;
         return this;
     }
+
 }

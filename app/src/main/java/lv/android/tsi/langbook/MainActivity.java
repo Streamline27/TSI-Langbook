@@ -40,11 +40,8 @@ public class MainActivity extends AppCompatActivity implements DictionariesFragm
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_dictionaries, menu);
-        return true;
+        return false;
     }
-
-
-
 
     @Override
     public void onDictionarySelected(Dictionary dictionary) {
@@ -52,14 +49,7 @@ public class MainActivity extends AppCompatActivity implements DictionariesFragm
         intent.putExtra(Constants.DICTIONARY_EXTRA_KEY, dictionary);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-
-        setPendingTransitionAnimationNone(this);
     }
-
-
-    /*
-        Private helper methods
-        */
 
 
 

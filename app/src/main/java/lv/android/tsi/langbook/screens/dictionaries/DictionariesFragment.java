@@ -2,15 +2,14 @@ package lv.android.tsi.langbook.screens.dictionaries;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +20,17 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import lv.android.tsi.langbook.R;
 import lv.android.tsi.langbook.domain.Dictionary;
-import lv.android.tsi.langbook.utilities.builders.CreateDialogBuilder;
+import lv.android.tsi.langbook.features.CheckDeleteItemFeature;
+import lv.android.tsi.langbook.features.CreateItemFeature;
 
 
 public class DictionariesFragment extends Fragment {
 
     @BindView(R.id.dictionaries_list_view) ListView mdDctionariesListView;
-
     @BindString(R.string.dialog_title_dictionaries) String CREATE_DICTIONARY_DIALOG_TITLE;
 
+    private CheckDeleteItemFeature mCheckDeleteFeature;
+    private CreateItemFeature mCreateItemFeature;
 
     private Unbinder unbinder;
 
@@ -44,24 +45,40 @@ public class DictionariesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_dictionaries, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+
         setHasOptionsMenu(true);
 
         dictionaries = getMockContent();
-
         adapter = new DictionariesAdapter(getContext(), dictionaries);
+
+        this.mCheckDeleteFeature = new CheckDeleteItemFeature(adapter, getActivity());
+        this.mCreateItemFeature = new CreateItemFeature(getContext(), CREATE_DICTIONARY_DIALOG_TITLE);
+
         mdDctionariesListView.setAdapter(adapter);
         mdDctionariesListView.setOnItemClickListener(this::onDictionaryItemSelectedAction);
+        mdDctionariesListView.setOnItemLongClickListener(mCheckDeleteFeature.getToggleCheckAction());
+
         mdDctionariesListView.setVerticalScrollBarEnabled(true);
+
 
         return view;
 
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        mCheckDeleteFeature.bindToggleableDeleteButton(menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
-        if (itemId == R.id.action_add_dictionary) getCreateDictionaryDialog().show();
+        if (itemId == R.id.action_add_dictionary)   mCreateItemFeature.runCreateDialog();
+        if (itemId == R.id.action_delete_item) mCheckDeleteFeature.runConfirmDeleteDialog();
         return true;
     }
 
@@ -72,32 +89,18 @@ public class DictionariesFragment extends Fragment {
         unbinder.unbind();
     }
 
+    @Override
+    public void onPause() {
+        this.mCheckDeleteFeature.reset();
+        super.onPause();
 
-    private AlertDialog getCreateDictionaryDialog() {
-        return CreateDialogBuilder.getBuilder(getContext())
-                .setTitle(CREATE_DICTIONARY_DIALOG_TITLE)
-                .setCreateButtonClickListener(this::onCreateDialogCreateButtonClick)
-                .build();
     }
-
-    private void onCreateDialogCreateButtonClick(View view){
-        String text = ((EditText) view.findViewById(R.id.dialog_item_name_edit_text)).getText().toString();
-        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
-    }
-
-
 
     private void onDictionaryItemSelectedAction(AdapterView<?> parent, View view, int position, long id){
         OnDictionarySelectedListener activity = (OnDictionarySelectedListener) getActivity();
         activity.onDictionarySelected(dictionaries.get(position));
-
     }
 
-    private List<Dictionary> getMockContent() {
-        List<Dictionary> mockDictionaries = new ArrayList<>();
-        for (int i = 0; i < 10; i++) mockDictionaries.add(new Dictionary(Integer.toString(i)));
-        return mockDictionaries;
-    }
 
 
     public interface OnDictionarySelectedListener {
@@ -105,5 +108,15 @@ public class DictionariesFragment extends Fragment {
     }
 
 
+
+    /*
+        Private helpers
+     */
+
+    private List<Dictionary> getMockContent() {
+        List<Dictionary> mockDictionaries = new ArrayList<>();
+        for (int i = 0; i < 10; i++) mockDictionaries.add(new Dictionary(Integer.toString(i)));
+        return mockDictionaries;
+    }
 
 }

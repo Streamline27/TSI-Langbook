@@ -67,15 +67,7 @@ public class NotesActivity extends AppCompatActivity implements NotesFragment.On
     @Override
     public void onUpButtonPressed() {
         finish();
-        setPendingTransitionAnimationNone(this);
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        setPendingTransitionAnimationNone(this);
-    }
-
 
     /**
         Helper methods

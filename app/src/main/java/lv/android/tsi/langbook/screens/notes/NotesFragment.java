@@ -2,7 +2,6 @@ package lv.android.tsi.langbook.screens.notes;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +22,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import lv.android.tsi.langbook.R;
 import lv.android.tsi.langbook.domain.Note;
-import lv.android.tsi.langbook.utilities.builders.CreateDialogBuilder;
+import lv.android.tsi.langbook.features.CheckDeleteItemFeature;
+import lv.android.tsi.langbook.features.CreateItemFeature;
 
 public class NotesFragment extends Fragment {
 
@@ -35,11 +35,14 @@ public class NotesFragment extends Fragment {
     private NotesAdapter adapter;
     private List<Note> notes;
 
+    private CreateItemFeature mCreateItemFeature;
+    private CheckDeleteItemFeature mCheckDeleteFeature;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
         View listViewHeader = inflater.inflate(R.layout.header_notes, null, false);
         setHasOptionsMenu(true);
@@ -49,21 +52,30 @@ public class NotesFragment extends Fragment {
         this.notes = getMockContent();
 
         this.adapter = new NotesAdapter(getContext(), notes);
+
+        this.mCreateItemFeature = new CreateItemFeature(getContext(), DIALOG_CREATE_NOTE_TITLE);
+        this.mCheckDeleteFeature = new CheckDeleteItemFeature(adapter, getActivity());
+
         this.mNotesListView.addHeaderView(listViewHeader, null, false);
         this.mNotesListView.setOnItemClickListener(this::onNoteItemClick);
+        this.mNotesListView.setOnItemLongClickListener(mCheckDeleteFeature.getToggleCheckAction());
         this.mNotesListView.setAdapter(adapter);
+
 
         return view;
     }
 
     public void onNoteItemClick(AdapterView<?> parent, View view, int position, long id) {
-        OnNoteSelectedListener listener = (OnNoteSelectedListener)getActivity();
+
+        OnNoteSelectedListener listener = (OnNoteSelectedListener) getActivity();
         listener.onNoteSelected();
+        this.mCheckDeleteFeature.reset();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_notes, menu);
+        mCheckDeleteFeature.bindToggleableDeleteButton(menu);
     }
 
     @Override
@@ -77,7 +89,8 @@ public class NotesFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == android.R.id.home) ((OnNoteSelectedListener)getActivity()).onUpButtonPressed();
-        if (id == R.id.action_add_note) getCreateDictionaryDialog().show();
+        if (id == R.id.action_add_note) mCreateItemFeature.runCreateDialog();
+        if (id == R.id.action_delete_item) mCheckDeleteFeature.runConfirmDeleteDialog();
         return true;
 
     }
@@ -102,13 +115,6 @@ public class NotesFragment extends Fragment {
         List<Note> noteMocks = new ArrayList<>();
         for (int i = 0; i < 10; i++) noteMocks.add(new Note(Integer.toString(i)));
         return noteMocks;
-    }
-
-    private AlertDialog getCreateDictionaryDialog() {
-        return CreateDialogBuilder.getBuilder(getContext())
-                .setTitle(DIALOG_CREATE_NOTE_TITLE)
-                .setCreateButtonClickListener(this::onCreateDialogCreateButtonClick)
-                .build();
     }
 
 }

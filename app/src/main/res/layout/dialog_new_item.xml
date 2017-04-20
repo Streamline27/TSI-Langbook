@@ -41,7 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
-            android:text="CANCEL"/>
+            android:text="@string/dialog_negative_caption"/>
         <TextView
             android:id="@+id/dialog_create_action"
             android:padding="10dp"
@@ -50,9 +50,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
-            android:text="CREATE"/>
+            android:text="@string/dialog_positive_caption"/>
 
     </LinearLayout>
+
     <Space
         android:layout_width="match_parent"
         android:layout_height="10dp" />
