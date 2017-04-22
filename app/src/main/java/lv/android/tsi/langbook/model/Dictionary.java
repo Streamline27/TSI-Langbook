@@ -1,4 +1,4 @@
-package lv.android.tsi.langbook.domain;
+package lv.android.tsi.langbook.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

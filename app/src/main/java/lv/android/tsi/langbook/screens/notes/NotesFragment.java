@@ -1,5 +1,6 @@
 package lv.android.tsi.langbook.screens.notes;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,33 +11,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import lv.android.tsi.langbook.R;
-import lv.android.tsi.langbook.domain.Note;
-import lv.android.tsi.langbook.features.CheckDeleteItemFeature;
-import lv.android.tsi.langbook.features.CreateItemFeature;
+import lv.android.tsi.langbook.model.Note;
+import lv.android.tsi.langbook.screens.notes.presenter.NotesPresenter;
+import lv.android.tsi.langbook.screens.notes.presenter.NotesPresenterImpl;
+import lv.android.tsi.langbook.screens.notes.presenter.NotesScreen;
 
-public class NotesFragment extends Fragment {
+import static lv.android.tsi.langbook.utilities.functions.DialogUtilities.showCreateDialogWithCallback;
+import static lv.android.tsi.langbook.utilities.functions.DialogUtilities.showDeleteDialogWithCallback;
+
+public class NotesFragment extends Fragment implements NotesScreen{
 
     @BindString(R.string.dialog_title_notes) String DIALOG_CREATE_NOTE_TITLE;
 
     @BindView(R.id.notes_list_view) ListView mNotesListView;
     private Unbinder unbinder;
 
-    private NotesAdapter adapter;
-    private List<Note> notes;
+    private MenuItem mDeleteMenuItem;
 
-    private CreateItemFeature mCreateItemFeature;
-    private CheckDeleteItemFeature mCheckDeleteFeature;
+    private NotesAdapter mAdapter;
+
+    private NotesPresenter presenter;
 
 
     @Override
@@ -49,33 +51,34 @@ public class NotesFragment extends Fragment {
 
         this.unbinder = ButterKnife.bind(this, view);
 
-        this.notes = getMockContent();
+        this.presenter = new NotesPresenterImpl(this);
 
-        this.adapter = new NotesAdapter(getContext(), notes);
-
-        this.mCreateItemFeature = new CreateItemFeature(getContext(), DIALOG_CREATE_NOTE_TITLE);
-        this.mCheckDeleteFeature = new CheckDeleteItemFeature(adapter, getActivity());
+        this.mAdapter = new NotesAdapter(getContext(), this.presenter.getNotes());
 
         this.mNotesListView.addHeaderView(listViewHeader, null, false);
-        this.mNotesListView.setOnItemClickListener(this::onNoteItemClick);
-        this.mNotesListView.setOnItemLongClickListener(mCheckDeleteFeature.getToggleCheckAction());
-        this.mNotesListView.setAdapter(adapter);
+        this.mNotesListView.setOnItemClickListener(this::onItemClick);
+        this.mNotesListView.setOnItemLongClickListener(this::onItemLongClick);
+        this.mNotesListView.setAdapter(mAdapter);
 
 
         return view;
     }
 
-    public void onNoteItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        ImageView itemMarker = (ImageView) view.findViewById(R.id.item_select_marker);
+        this.presenter.toggleNoteCheck(position, itemMarker);
+        return true;
+    }
 
-        OnNoteSelectedListener listener = (OnNoteSelectedListener) getActivity();
-        listener.onNoteSelected();
-        this.mCheckDeleteFeature.reset();
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        this.presenter.performSelectNoteClick(position);
+        this.presenter.resetCheck();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_notes, menu);
-        mCheckDeleteFeature.bindToggleableDeleteButton(menu);
+        this.mDeleteMenuItem = menu.findItem(R.id.action_delete_item);
     }
 
     @Override
@@ -88,33 +91,61 @@ public class NotesFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == android.R.id.home) ((OnNoteSelectedListener)getActivity()).onUpButtonPressed();
-        if (id == R.id.action_add_note) mCreateItemFeature.runCreateDialog();
-        if (id == R.id.action_delete_item) mCheckDeleteFeature.runConfirmDeleteDialog();
+        if (id == android.R.id.home) this.presenter.performUpButtonClick();
+        if (id == R.id.action_add_note) this.presenter.performMenuCreateClick();
+        if (id == R.id.action_delete_item) this.presenter.performMenuDeleteClick();
         return true;
 
     }
 
+    private void onConfirmDeleteClick(DialogInterface dialog, int which){
+        this.presenter.deleteCheckedNote();
+        this.presenter.resetCheck();
+    }
 
-    private void onCreateDialogCreateButtonClick(View view){
+    private void onCreateDialogConfirmButtonClick(View view) {
         String text = ((EditText) view.findViewById(R.id.dialog_item_name_edit_text)).getText().toString();
-        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
-    }
-
-    public interface OnNoteSelectedListener{
-        void onNoteSelected();
-        void onUpButtonPressed();
+        this.presenter.createNote(text);
     }
 
 
-    /*
-        Private helper methods
-        */
+    /* Notes screen specific behaviour */
 
-    private List<Note> getMockContent() {
-        List<Note> noteMocks = new ArrayList<>();
-        for (int i = 0; i < 10; i++) noteMocks.add(new Note(Integer.toString(i)));
-        return noteMocks;
+    @Override
+    public void showDeleteButton() {
+        mDeleteMenuItem.setVisible(true);
     }
 
+    @Override
+    public void hideDeleteButton() {
+        mDeleteMenuItem.setVisible(false);
+    }
+
+    @Override
+    public void showCreateDialog() {
+        showCreateDialogWithCallback(getContext(), DIALOG_CREATE_NOTE_TITLE, this::onCreateDialogConfirmButtonClick);
+    }
+
+
+    @Override
+    public void showDeleteDialog() {
+        showDeleteDialogWithCallback(getContext(), this::onConfirmDeleteClick);
+    }
+
+    @Override
+    public void refreshNotesList() {
+        this.mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void goToNoteContent(Note note) {
+        OnNoteSelectedListener listener = (OnNoteSelectedListener) getActivity();
+        listener.onNoteSelected();
+    }
+
+    @Override
+    public void goUpToDictionaryList() {
+        OnNoteSelectedListener listener = (OnNoteSelectedListener) getActivity();
+        listener.onUpButtonPressed();
+    }
 }

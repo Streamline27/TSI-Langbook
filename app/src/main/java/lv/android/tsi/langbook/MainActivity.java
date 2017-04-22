@@ -1,27 +1,20 @@
 package lv.android.tsi.langbook;
 
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import lv.android.tsi.langbook.domain.Dictionary;
-import lv.android.tsi.langbook.screens.dictionaries.DictionariesFragment;
+import lv.android.tsi.langbook.model.Dictionary;
+import lv.android.tsi.langbook.screens.dictionaries.OnDictionarySelectedListener;
 import lv.android.tsi.langbook.utilities.Constants;
-import lv.android.tsi.langbook.utilities.builders.CreateDialogBuilder;
 
-import static lv.android.tsi.langbook.utilities.functions.AnimationUtilities.setPendingTransitionAnimationNone;
 
-public class MainActivity extends AppCompatActivity implements DictionariesFragment.OnDictionarySelectedListener{
+public class MainActivity extends AppCompatActivity implements OnDictionarySelectedListener {
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindString(R.string.title_fragment_dictionaries) String DICTIONARIES_TITLE;

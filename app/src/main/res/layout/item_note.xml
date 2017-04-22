@@ -42,7 +42,7 @@
     </LinearLayout>
     <ImageView
         android:visibility="invisible"
-        android:id="@+id/item_select_msrker"
+        android:id="@+id/item_select_marker"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:paddingLeft="12dp"

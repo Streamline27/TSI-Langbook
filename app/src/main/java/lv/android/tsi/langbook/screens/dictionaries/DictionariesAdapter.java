@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import java.util.List;
 
 import lv.android.tsi.langbook.R;
-import lv.android.tsi.langbook.domain.Dictionary;
+import lv.android.tsi.langbook.model.Dictionary;
 
 /**
  * Created by Vladislav on 16.04.2017.

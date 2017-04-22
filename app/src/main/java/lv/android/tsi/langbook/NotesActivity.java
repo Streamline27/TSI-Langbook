@@ -7,22 +7,18 @@ import android.support.v7.widget.Toolbar;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import lv.android.tsi.langbook.domain.Dictionary;
+import lv.android.tsi.langbook.model.Dictionary;
 import lv.android.tsi.langbook.screens.content.ContentFragment;
 import lv.android.tsi.langbook.screens.notes.NotesFragment;
+import lv.android.tsi.langbook.screens.notes.OnNoteSelectedListener;
 import lv.android.tsi.langbook.utilities.Constants;
 
-import static lv.android.tsi.langbook.screens.content.ContentFragmentExportUtils.setActionBarHomeButtonIconOkMark;
-import static lv.android.tsi.langbook.screens.content.ContentFragmentExportUtils.setActionBarHomeButtonIconDefault;
-import static lv.android.tsi.langbook.utilities.functions.AnimationUtilities.setPendingTransitionAnimationNone;
 
-public class NotesActivity extends AppCompatActivity implements NotesFragment.OnNoteSelectedListener,
-                                                                ContentFragment.OnEditButtonClickListener {
+public class NotesActivity extends AppCompatActivity implements OnNoteSelectedListener {
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
-
     @BindString(R.string.title_fragment_notes) String NOTES_TITLE;
-    @BindString(R.string.title_mode_edit) String EDIT_MODE_TITLE;
+
 
     private Dictionary dictionary;
 
@@ -52,28 +48,10 @@ public class NotesActivity extends AppCompatActivity implements NotesFragment.On
                 .commit();
     }
 
-    @Override
-    public void onContentEditModeToggledOn() {
-        setActionBarTitle(EDIT_MODE_TITLE);
-        setActionBarHomeButtonIconOkMark(this);
-    }
 
-    @Override
-    public void onContentEditModeToggledOff() {
-        setActionBarTitle(NOTES_TITLE);
-        setActionBarHomeButtonIconDefault(this);
-    }
 
     @Override
     public void onUpButtonPressed() {
         finish();
-    }
-
-    /**
-        Helper methods
-     */
-
-    private void setActionBarTitle(String title){
-        mToolbar.setTitle(title);
     }
 }

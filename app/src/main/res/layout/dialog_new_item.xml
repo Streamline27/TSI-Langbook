@@ -24,6 +24,7 @@
             android:id="@+id/dialog_item_name_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
             android:paddingLeft="6dp"
             android:paddingRight="6dp"/>
     </FrameLayout>
