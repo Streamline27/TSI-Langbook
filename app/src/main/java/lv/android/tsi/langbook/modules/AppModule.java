@@ -1,6 +1,8 @@
 package lv.android.tsi.langbook.modules;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import javax.inject.Singleton;
 
@@ -27,6 +29,12 @@ public class AppModule {
 
     public AppModule(Application mApplication) {
         this.mApplication = mApplication;
+    }
+
+    @Provides
+    @Singleton
+    SharedPreferences providesSharedPreferences(Application application){
+        return PreferenceManager.getDefaultSharedPreferences(application);
     }
 
     @Provides

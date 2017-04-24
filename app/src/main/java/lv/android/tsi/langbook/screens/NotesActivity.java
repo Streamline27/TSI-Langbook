@@ -1,19 +1,22 @@
 package lv.android.tsi.langbook.screens;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lv.android.tsi.langbook.R;
-import lv.android.tsi.langbook.model.domain.Dictionary;
-import lv.android.tsi.langbook.model.domain.Note;
+import lv.android.tsi.langbook.domain.Dictionary;
+import lv.android.tsi.langbook.domain.Note;
 import lv.android.tsi.langbook.screens.content.ContentFragment;
 import lv.android.tsi.langbook.screens.notes.NotesFragment;
 import lv.android.tsi.langbook.screens.notes.OnNoteSelectedListener;
-import lv.android.tsi.langbook.utilities.Constants;
+import lv.android.tsi.langbook.Constants;
 
 
 public class NotesActivity extends AppCompatActivity implements OnNoteSelectedListener {
@@ -46,6 +49,19 @@ public class NotesActivity extends AppCompatActivity implements OnNoteSelectedLi
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.action_settings){
+            Intent i = new Intent(this, SettingsActivity.class);
+            i.putExtra(Constants.CALLING_ACTIVITY_EXTRA, this.getClass().getName());
+            startActivity(i);
+            return true;
+        }
+        else return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onNoteSelected(Note note) {
         ContentFragment f = ContentFragment.newInstance(note);
         getSupportFragmentManager().beginTransaction()
@@ -66,4 +82,5 @@ public class NotesActivity extends AppCompatActivity implements OnNoteSelectedLi
         if (fragment != null) fragment.onBackPressed();
 
     }
+
 }

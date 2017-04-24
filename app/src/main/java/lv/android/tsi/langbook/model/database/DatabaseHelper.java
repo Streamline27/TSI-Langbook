@@ -6,8 +6,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import lv.android.tsi.langbook.model.database.DatabaseContract.DictionaryEntry;
 import lv.android.tsi.langbook.model.database.DatabaseContract.NoteEntry;
-import lv.android.tsi.langbook.model.domain.Dictionary;
-import lv.android.tsi.langbook.model.domain.Note;
 
 /**
  * Created by Natasa on 23.04.2017.

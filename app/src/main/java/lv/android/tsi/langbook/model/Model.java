@@ -1,11 +1,9 @@
 package lv.android.tsi.langbook.model;
 
-import android.database.Cursor;
-
 import java.util.List;
 
-import lv.android.tsi.langbook.model.domain.Dictionary;
-import lv.android.tsi.langbook.model.domain.Note;
+import lv.android.tsi.langbook.domain.Dictionary;
+import lv.android.tsi.langbook.domain.Note;
 
 /**
  * Created by Natasa on 23.04.2017.

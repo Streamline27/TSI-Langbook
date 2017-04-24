@@ -1,9 +1,7 @@
-package lv.android.tsi.langbook.model.domain;
+package lv.android.tsi.langbook.domain;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-
-import com.j256.ormlite.stmt.query.In;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package lv.android.tsi.langbook.model.domain;
+package lv.android.tsi.langbook.domain;
 
 import android.content.ContentValues;
 import android.database.Cursor;

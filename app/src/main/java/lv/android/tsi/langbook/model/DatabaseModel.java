@@ -4,15 +4,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.j256.ormlite.stmt.query.Not;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import lv.android.tsi.langbook.model.database.DatabaseContract;
 import lv.android.tsi.langbook.model.database.DatabaseHelper;
-import lv.android.tsi.langbook.model.domain.Dictionary;
-import lv.android.tsi.langbook.model.domain.Note;
+import lv.android.tsi.langbook.domain.Dictionary;
+import lv.android.tsi.langbook.domain.Note;
 
 import lv.android.tsi.langbook.model.database.DatabaseContract.DictionaryEntry;
 import lv.android.tsi.langbook.model.database.DatabaseContract.NoteEntry;

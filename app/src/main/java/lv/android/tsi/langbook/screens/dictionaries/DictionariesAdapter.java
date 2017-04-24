@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import lv.android.tsi.langbook.R;
-import lv.android.tsi.langbook.model.domain.Dictionary;
+import lv.android.tsi.langbook.domain.Dictionary;
 
 /**
  * Created by Vladislav on 16.04.2017.

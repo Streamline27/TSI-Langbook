@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lv.android.tsi.langbook.model.Model;
-import lv.android.tsi.langbook.model.domain.Dictionary;
-import lv.android.tsi.langbook.model.domain.Note;
+import lv.android.tsi.langbook.domain.Dictionary;
+import lv.android.tsi.langbook.domain.Note;
 import lv.android.tsi.langbook.interactions.CheckDeleteInteraction;
 
 /**

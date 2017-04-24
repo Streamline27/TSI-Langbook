@@ -1,6 +1,6 @@
 package lv.android.tsi.langbook.screens.notes;
 
-import lv.android.tsi.langbook.model.domain.Note;
+import lv.android.tsi.langbook.domain.Note;
 
 /**
  * Created by Natasa on 22.04.2017.

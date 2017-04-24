@@ -4,8 +4,8 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-import lv.android.tsi.langbook.model.domain.Dictionary;
-import lv.android.tsi.langbook.model.domain.Note;
+import lv.android.tsi.langbook.domain.Dictionary;
+import lv.android.tsi.langbook.domain.Note;
 
 /**
  * Created by Natasa on 22.04.2017.

@@ -15,8 +15,8 @@ import java.util.Set;
 
 import lv.android.tsi.langbook.model.database.DatabaseContract;
 import lv.android.tsi.langbook.model.database.DatabaseHelper;
-import lv.android.tsi.langbook.model.domain.Dictionary;
-import lv.android.tsi.langbook.model.domain.Note;
+import lv.android.tsi.langbook.domain.Dictionary;
+import lv.android.tsi.langbook.domain.Note;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;

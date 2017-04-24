@@ -1,12 +1,11 @@
 package lv.android.tsi.langbook.screens.dictionaries.presenter;
 
-import android.database.Cursor;
 import android.widget.ImageView;
 
 import java.util.List;
 
 import lv.android.tsi.langbook.model.Model;
-import lv.android.tsi.langbook.model.domain.Dictionary;
+import lv.android.tsi.langbook.domain.Dictionary;
 import lv.android.tsi.langbook.interactions.CheckDeleteInteraction;
 
 /**

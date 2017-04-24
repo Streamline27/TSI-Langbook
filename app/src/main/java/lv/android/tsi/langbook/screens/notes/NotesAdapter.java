@@ -9,12 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import lv.android.tsi.langbook.R;
-import lv.android.tsi.langbook.model.domain.Note;
+import lv.android.tsi.langbook.domain.Note;
 
 /**
  * Created by Vladislav on 17.04.2017.

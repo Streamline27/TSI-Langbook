@@ -1,6 +1,6 @@
 package lv.android.tsi.langbook.screens.content.presenter;
 
-import lv.android.tsi.langbook.model.domain.Note;
+import lv.android.tsi.langbook.domain.Note;
 
 /**
  * Created by Natasa on 22.04.2017.
@@ -11,6 +11,7 @@ public interface ContentPresenter {
     void performEditButtonClick();
 
     void performUpButtonClick(String contentText);
+    void performShareButtonClick(String contentText);
 
     void saveContent(String contentText);
 

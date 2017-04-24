@@ -1,4 +1,4 @@
-package lv.android.tsi.langbook.utilities.functions;
+package lv.android.tsi.langbook.utilities;
 
 import android.app.Activity;
 import android.content.Context;

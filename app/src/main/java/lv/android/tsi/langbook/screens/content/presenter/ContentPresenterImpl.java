@@ -1,7 +1,7 @@
 package lv.android.tsi.langbook.screens.content.presenter;
 
 import lv.android.tsi.langbook.model.Model;
-import lv.android.tsi.langbook.model.domain.Note;
+import lv.android.tsi.langbook.domain.Note;
 
 /**
  * Created by Natasa on 22.04.2017.
@@ -28,6 +28,12 @@ public class ContentPresenterImpl implements ContentPresenter{
     }
 
     @Override
+    public void performShareButtonClick(String contentText) {
+        this.saveAndResetEditMode(contentText);
+        this.screen.launchShareIntent(note.getContent());
+    }
+
+    @Override
     public void saveContent(String contentText) {
         note.setContent(contentText);
         model.updateNote(note);
@@ -51,7 +57,7 @@ public class ContentPresenterImpl implements ContentPresenter{
         this.screen.setEditTextStatic();
         this.mEditModeEnabled = false;
 
-        saveContent(contentText);
+        this.saveContent(contentText);
     }
 
     @Override

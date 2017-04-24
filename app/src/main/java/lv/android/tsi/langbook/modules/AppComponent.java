@@ -3,6 +3,7 @@ package lv.android.tsi.langbook.modules;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import lv.android.tsi.langbook.screens.SettingsActivity;
 import lv.android.tsi.langbook.screens.content.ContentFragment;
 import lv.android.tsi.langbook.screens.dictionaries.DictionariesFragment;
 import lv.android.tsi.langbook.screens.notes.NotesFragment;
@@ -18,4 +19,6 @@ public interface AppComponent {
     void inject(NotesFragment fragment);
     void inject(DictionariesFragment fragment);
     void inject(ContentFragment fragment);
+
+    void inject(SettingsActivity activity);
 }

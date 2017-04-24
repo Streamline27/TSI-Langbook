@@ -1,11 +1,14 @@
 package lv.android.tsi.langbook.screens.content;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,14 +27,15 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import lv.android.tsi.langbook.App;
 import lv.android.tsi.langbook.R;
-import lv.android.tsi.langbook.model.domain.Note;
+import lv.android.tsi.langbook.domain.Note;
 import lv.android.tsi.langbook.screens.content.presenter.ContentPresenter;
 import lv.android.tsi.langbook.screens.content.presenter.ContentScreen;
-import lv.android.tsi.langbook.utilities.Constants;
+import lv.android.tsi.langbook.Constants;
 
-import static lv.android.tsi.langbook.utilities.functions.DelayUtilities.makeVisibleAfterDelay;
-import static lv.android.tsi.langbook.utilities.functions.KeyboardUtilities.hideKeyboard;
-import static lv.android.tsi.langbook.utilities.functions.KeyboardUtilities.showKeyBoard;
+import static lv.android.tsi.langbook.utilities.DelayUtilities.makeVisibleAfterDelay;
+import static lv.android.tsi.langbook.utilities.IntentUtilities.getTwitterIntent;
+import static lv.android.tsi.langbook.utilities.KeyboardUtilities.hideKeyboard;
+import static lv.android.tsi.langbook.utilities.KeyboardUtilities.showKeyBoard;
 
 public class ContentFragment extends Fragment implements ContentScreen{
 
@@ -40,6 +44,7 @@ public class ContentFragment extends Fragment implements ContentScreen{
     @BindView(R.id.header_content_caption) TextView mNoteCaptionText;
 
     private ActionBar mActionBar;
+    private ShareActionProvider mShareActionProvider;
 
     @BindString(R.string.title_fragment_notes) String NOTES_TITLE;
     @BindString(R.string.title_mode_edit)  String EDIT_MODE_TITLE;
@@ -86,6 +91,9 @@ public class ContentFragment extends Fragment implements ContentScreen{
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_content, menu);
+        MenuItem shareItem = menu.findItem(R.id.action_share);
+
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
     }
 
     @Override
@@ -103,16 +111,26 @@ public class ContentFragment extends Fragment implements ContentScreen{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        String contentText = mEditTextContext.getText().toString();
 
         if (id == android.R.id.home) {
-            String contentText = mEditTextContext.getText().toString();
             this.presenter.performUpButtonClick(contentText);
+            return true;
         }
-        return true;
+        else if (id == R.id.action_share){
+            this.presenter.performShareButtonClick(contentText);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
-
     /* Content screen specific behaviour */
+
+    @Override
+    public void launchShareIntent(String text){
+        Intent intent = getTwitterIntent(text);
+        startActivity(intent);
+    }
 
     @Override
     public void setUpButtonIconToCheckMark() {
@@ -163,4 +181,6 @@ public class ContentFragment extends Fragment implements ContentScreen{
     public void goToNotesListScreen() {
         getActivity().getSupportFragmentManager().popBackStackImmediate();
     }
+
+
 }

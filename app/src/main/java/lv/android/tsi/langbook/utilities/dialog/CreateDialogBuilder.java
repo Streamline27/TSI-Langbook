@@ -1,4 +1,4 @@
-package lv.android.tsi.langbook.utilities.builders;
+package lv.android.tsi.langbook.utilities.dialog;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;

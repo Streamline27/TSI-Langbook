@@ -22,12 +22,12 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import lv.android.tsi.langbook.App;
 import lv.android.tsi.langbook.R;
-import lv.android.tsi.langbook.model.domain.Dictionary;
+import lv.android.tsi.langbook.domain.Dictionary;
 import lv.android.tsi.langbook.screens.dictionaries.presenter.DictionariesPresenter;
 import lv.android.tsi.langbook.screens.dictionaries.presenter.DictionariesScreen;
 
-import static lv.android.tsi.langbook.utilities.functions.DialogUtilities.showCreateDialogWithCallback;
-import static lv.android.tsi.langbook.utilities.functions.DialogUtilities.showDeleteDialogWithCallback;
+import static lv.android.tsi.langbook.utilities.dialog.DialogUtilities.showCreateDialogWithCallback;
+import static lv.android.tsi.langbook.utilities.dialog.DialogUtilities.showDeleteDialogWithCallback;
 
 
 public class DictionariesFragment extends Fragment implements DictionariesScreen{

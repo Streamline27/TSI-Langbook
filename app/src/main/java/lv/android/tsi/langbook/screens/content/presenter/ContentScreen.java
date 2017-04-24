@@ -20,6 +20,6 @@ public interface ContentScreen {
 
     void goToNotesListScreen();
 
-
+    void launchShareIntent(String text);
 
 }

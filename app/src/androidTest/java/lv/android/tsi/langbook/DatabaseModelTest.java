@@ -1,7 +1,6 @@
 package lv.android.tsi.langbook;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -11,7 +10,7 @@ import java.util.List;
 
 import lv.android.tsi.langbook.model.DatabaseModel;
 import lv.android.tsi.langbook.model.database.DatabaseHelper;
-import lv.android.tsi.langbook.model.domain.Dictionary;
+import lv.android.tsi.langbook.domain.Dictionary;
 
 import static junit.framework.Assert.assertEquals;
 

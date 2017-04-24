@@ -23,14 +23,14 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import lv.android.tsi.langbook.App;
 import lv.android.tsi.langbook.R;
-import lv.android.tsi.langbook.model.domain.Dictionary;
-import lv.android.tsi.langbook.model.domain.Note;
+import lv.android.tsi.langbook.domain.Dictionary;
+import lv.android.tsi.langbook.domain.Note;
 import lv.android.tsi.langbook.screens.notes.presenter.NotesPresenter;
 import lv.android.tsi.langbook.screens.notes.presenter.NotesScreen;
-import lv.android.tsi.langbook.utilities.Constants;
+import lv.android.tsi.langbook.Constants;
 
-import static lv.android.tsi.langbook.utilities.functions.DialogUtilities.showCreateDialogWithCallback;
-import static lv.android.tsi.langbook.utilities.functions.DialogUtilities.showDeleteDialogWithCallback;
+import static lv.android.tsi.langbook.utilities.dialog.DialogUtilities.showCreateDialogWithCallback;
+import static lv.android.tsi.langbook.utilities.dialog.DialogUtilities.showDeleteDialogWithCallback;
 
 public class NotesFragment extends Fragment implements NotesScreen{
 
