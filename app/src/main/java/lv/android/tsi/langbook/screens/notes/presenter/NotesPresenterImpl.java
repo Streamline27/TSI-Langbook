@@ -5,7 +5,9 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-import lv.android.tsi.langbook.model.Note;
+import lv.android.tsi.langbook.model.Model;
+import lv.android.tsi.langbook.model.domain.Dictionary;
+import lv.android.tsi.langbook.model.domain.Note;
 import lv.android.tsi.langbook.interactions.CheckDeleteInteraction;
 
 /**
@@ -15,15 +17,34 @@ import lv.android.tsi.langbook.interactions.CheckDeleteInteraction;
 public class NotesPresenterImpl implements NotesPresenter {
 
     private NotesScreen screen;
+    private Model model;
 
     private CheckDeleteInteraction checkDeleteInteraction;
 
     private List<Note> notes;
+    private Dictionary dictionary;
 
-    public NotesPresenterImpl(NotesScreen screen) {
+    public NotesPresenterImpl(Model model) {
+
+        this.checkDeleteInteraction = new CheckDeleteInteraction();
+        this.model = model;
+        this.notes = new ArrayList<>();
+    }
+
+    @Override
+    public void initialize(NotesScreen screen, Dictionary dictionary) {
         this.screen = screen;
-        this.checkDeleteInteraction = new CheckDeleteInteraction(screen);
-        this.notes = getMockContent();
+        this.checkDeleteInteraction.attachScreen(screen);
+        this.notes = model.getNotes(dictionary);
+        this.dictionary = dictionary;
+    }
+
+    @Override
+    public void detachScreen() {
+        this.screen = null;
+        this.checkDeleteInteraction.detachScreen();
+        this.notes = null;
+        this.dictionary = null;
     }
 
     @Override
@@ -33,11 +54,13 @@ public class NotesPresenterImpl implements NotesPresenter {
 
     @Override
     public void performUpButtonClick() {
+        this.checkDeleteInteraction.reset();
         this.screen.goUpToDictionaryList();
     }
 
     @Override
     public void performSelectNoteClick(int position) {
+        this.checkDeleteInteraction.reset();
         this.screen.goToNoteContent(notes.get(position));
     }
 
@@ -49,7 +72,10 @@ public class NotesPresenterImpl implements NotesPresenter {
     @Override
     public void deleteCheckedNote() {
         int position = this.checkDeleteInteraction.getLastSelectedPosition();
-        if (position != -1) this.notes.remove(position);
+        if (position != -1) {
+            model.deleteNote(notes.get(position));
+            notes.remove(position);
+        }
         this.screen.refreshNotesList();
     }
 
@@ -70,12 +96,16 @@ public class NotesPresenterImpl implements NotesPresenter {
 
     @Override
     public void createNote(String text) {
-        notes.add(new Note(text));
+
+        Note note = new Note(text, dictionary.getId());
+        note.setDictionaryId(dictionary.getId());
+        long id = model.addNote(note);
+        note.setId(id);
+        notes.add(note);
     }
 
-    private List<Note> getMockContent() {
-        List<Note> noteMocks = new ArrayList<>();
-        for (int i = 0; i < 10; i++) noteMocks.add(new Note(Integer.toString(i)));
-        return noteMocks;
+    @Override
+    public void performBackButtonClick() {
+        this.checkDeleteInteraction.reset();
     }
 }

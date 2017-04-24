@@ -29,4 +29,7 @@
     <string name="dialog_delete_confirm_text">Confirm</string>
     <string name="dialog_delete_cancel_text">Cancel</string>
 
+    <!-- TODO: Remove or change this placeholder content -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -13,16 +13,21 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import javax.inject.Inject;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import lv.android.tsi.langbook.App;
 import lv.android.tsi.langbook.R;
-import lv.android.tsi.langbook.model.Note;
+import lv.android.tsi.langbook.model.domain.Dictionary;
+import lv.android.tsi.langbook.model.domain.Note;
 import lv.android.tsi.langbook.screens.notes.presenter.NotesPresenter;
-import lv.android.tsi.langbook.screens.notes.presenter.NotesPresenterImpl;
 import lv.android.tsi.langbook.screens.notes.presenter.NotesScreen;
+import lv.android.tsi.langbook.utilities.Constants;
 
 import static lv.android.tsi.langbook.utilities.functions.DialogUtilities.showCreateDialogWithCallback;
 import static lv.android.tsi.langbook.utilities.functions.DialogUtilities.showDeleteDialogWithCallback;
@@ -38,7 +43,17 @@ public class NotesFragment extends Fragment implements NotesScreen{
 
     private NotesAdapter mAdapter;
 
-    private NotesPresenter presenter;
+    @Inject NotesPresenter presenter;
+
+    public static NotesFragment newInstance(Dictionary dictionary){
+        NotesFragment f = new NotesFragment();
+
+        Bundle args = new Bundle();
+        args.putSerializable(Constants.DICTIONARY_EXTRA_KEY, dictionary);
+        f.setArguments(args);
+
+        return  f;
+    }
 
 
     @Override
@@ -46,12 +61,14 @@ public class NotesFragment extends Fragment implements NotesScreen{
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_notes, container, false);
-        View listViewHeader = inflater.inflate(R.layout.header_notes, null, false);
-        setHasOptionsMenu(true);
+        Dictionary dictionary = (Dictionary) getArguments().getSerializable(Constants.DICTIONARY_EXTRA_KEY);
+        View listViewHeader = getInitializedHeaderView(dictionary, inflater);
 
         this.unbinder = ButterKnife.bind(this, view);
+        ((App)getActivity().getApplication()).getAppComponent().inject(this);
 
-        this.presenter = new NotesPresenterImpl(this);
+
+        this.presenter.initialize(this, dictionary);
 
         this.mAdapter = new NotesAdapter(getContext(), this.presenter.getNotes());
 
@@ -60,17 +77,20 @@ public class NotesFragment extends Fragment implements NotesScreen{
         this.mNotesListView.setOnItemLongClickListener(this::onItemLongClick);
         this.mNotesListView.setAdapter(mAdapter);
 
+        setHasOptionsMenu(true);
 
         return view;
     }
 
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        position -= 1; // This solves first element header issue
         ImageView itemMarker = (ImageView) view.findViewById(R.id.item_select_marker);
         this.presenter.toggleNoteCheck(position, itemMarker);
         return true;
     }
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        position -= 1; // This solves first element header issue
         this.presenter.performSelectNoteClick(position);
         this.presenter.resetCheck();
     }
@@ -84,7 +104,8 @@ public class NotesFragment extends Fragment implements NotesScreen{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        this.presenter.detachScreen();
+        this.unbinder.unbind();
     }
 
     @Override
@@ -106,6 +127,10 @@ public class NotesFragment extends Fragment implements NotesScreen{
     private void onCreateDialogConfirmButtonClick(View view) {
         String text = ((EditText) view.findViewById(R.id.dialog_item_name_edit_text)).getText().toString();
         this.presenter.createNote(text);
+    }
+
+    public void onBackPressed(){
+        this.presenter.performBackButtonClick();
     }
 
 
@@ -140,7 +165,7 @@ public class NotesFragment extends Fragment implements NotesScreen{
     @Override
     public void goToNoteContent(Note note) {
         OnNoteSelectedListener listener = (OnNoteSelectedListener) getActivity();
-        listener.onNoteSelected();
+        listener.onNoteSelected(note);
     }
 
     @Override
@@ -148,4 +173,16 @@ public class NotesFragment extends Fragment implements NotesScreen{
         OnNoteSelectedListener listener = (OnNoteSelectedListener) getActivity();
         listener.onUpButtonPressed();
     }
+
+    /* Private helper methods */
+
+    private View getInitializedHeaderView(Dictionary dictionary, LayoutInflater inflater){
+        View listViewHeader = inflater.inflate(R.layout.header_notes, null, false);
+        TextView captionText = (TextView)listViewHeader.findViewById(R.id.header_notes_caption);
+
+        captionText.setText(dictionary.getTitle());
+        return listViewHeader;
+
+    }
+
 }

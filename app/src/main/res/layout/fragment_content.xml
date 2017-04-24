@@ -24,6 +24,7 @@
                     style="@style/FullWidthEditText"
                     android:inputType="textMultiLine"
                     android:focusable="false"
+                    android:longClickable="false"
                     android:text="@string/mockText"/>
                 <Space
                     android:layout_width="match_parent"

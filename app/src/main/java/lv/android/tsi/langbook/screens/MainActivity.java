@@ -1,4 +1,4 @@
-package lv.android.tsi.langbook;
+package lv.android.tsi.langbook.screens;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +9,9 @@ import android.view.Menu;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import lv.android.tsi.langbook.model.Dictionary;
+import lv.android.tsi.langbook.R;
+import lv.android.tsi.langbook.model.domain.Dictionary;
+import lv.android.tsi.langbook.screens.dictionaries.DictionariesFragment;
 import lv.android.tsi.langbook.screens.dictionaries.OnDictionarySelectedListener;
 import lv.android.tsi.langbook.utilities.Constants;
 
@@ -44,7 +46,10 @@ public class MainActivity extends AppCompatActivity implements OnDictionarySelec
         startActivity(intent);
     }
 
-
-
-
+    @Override
+    public void onBackPressed() {
+        DictionariesFragment fragment = (DictionariesFragment)getSupportFragmentManager().findFragmentById(R.id.dictionaries_fragment);
+        fragment.resetCheck();
+        super.onBackPressed();
+    }
 }

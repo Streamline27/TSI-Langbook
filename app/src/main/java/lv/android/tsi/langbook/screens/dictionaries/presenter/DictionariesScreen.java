@@ -1,6 +1,6 @@
 package lv.android.tsi.langbook.screens.dictionaries.presenter;
 
-import lv.android.tsi.langbook.model.Dictionary;
+import lv.android.tsi.langbook.model.domain.Dictionary;
 import lv.android.tsi.langbook.interactions.CheckDeleteScreen;
 
 /**

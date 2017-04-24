@@ -14,14 +14,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import javax.inject.Inject;
+
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import lv.android.tsi.langbook.App;
 import lv.android.tsi.langbook.R;
-import lv.android.tsi.langbook.model.Dictionary;
+import lv.android.tsi.langbook.model.domain.Dictionary;
 import lv.android.tsi.langbook.screens.dictionaries.presenter.DictionariesPresenter;
-import lv.android.tsi.langbook.screens.dictionaries.presenter.DictionariesPresenterImpl;
 import lv.android.tsi.langbook.screens.dictionaries.presenter.DictionariesScreen;
 
 import static lv.android.tsi.langbook.utilities.functions.DialogUtilities.showCreateDialogWithCallback;
@@ -30,33 +32,28 @@ import static lv.android.tsi.langbook.utilities.functions.DialogUtilities.showDe
 
 public class DictionariesFragment extends Fragment implements DictionariesScreen{
 
-    @BindView(R.id.dictionaries_list_view) ListView mdDctionariesListView;
+
     @BindString(R.string.dialog_title_dictionaries) String CREATE_DICTIONARY_DIALOG_TITLE;
 
-    @BindString(R.string.dialog_delete_message) String DIALOG_DELETE_MESSAGE;
-    @BindString(R.string.dialog_delete_title) String DIALOG_DELETE_TITLE;
-    @BindString(R.string.dialog_delete_confirm_text) String DIALOG_DELETE_APROVE_TEXT;
-    @BindString(R.string.dialog_delete_cancel_text) String DIALOG_DELETE_CANCEL_TEXT;
-
-
+    @BindView(R.id.dictionaries_list_view) ListView mdDctionariesListView;
     private Unbinder unbinder;
 
+    @Inject DictionariesPresenter presenter;
+
     private MenuItem mDeleteMenuItem;
-
     private DictionariesAdapter mAdapter;
-
-    private DictionariesPresenter presenter;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dictionaries, container, false);
-        this.unbinder = ButterKnife.bind(this, view);
 
-        this.presenter = new DictionariesPresenterImpl(this);
+        this.unbinder = ButterKnife.bind(this, view);
+        ((App)getActivity().getApplication()).getAppComponent().inject(this);
+
+        this.presenter.initialize(this);
 
         this.mAdapter = new DictionariesAdapter(getContext(), presenter.getDictionaries());
 
@@ -96,6 +93,10 @@ public class DictionariesFragment extends Fragment implements DictionariesScreen
         this.presenter.createDictionary(text);
     }
 
+    public void resetCheck(){
+        this.presenter.resetCheck();
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -109,6 +110,7 @@ public class DictionariesFragment extends Fragment implements DictionariesScreen
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        this.presenter.detachScreen();
         unbinder.unbind();
     }
 

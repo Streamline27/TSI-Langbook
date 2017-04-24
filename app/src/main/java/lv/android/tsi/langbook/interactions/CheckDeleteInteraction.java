@@ -17,8 +17,7 @@ public class CheckDeleteInteraction {
     private boolean mCheckModeEnabled;
 
 
-    public CheckDeleteInteraction(CheckDeleteScreen screen) {
-        this.mScreen = screen;
+    public CheckDeleteInteraction() {
 
         this.mLastSelectedItemMarker = null;
         this.mLastSelectedPosition = -1;
@@ -40,6 +39,14 @@ public class CheckDeleteInteraction {
         if (mCheckModeEnabled) leaveCheckedMode();
     }
 
+    public void attachScreen(CheckDeleteScreen screen){
+        this.mScreen = screen;
+    }
+
+    public void detachScreen(){
+        this.mScreen = null;
+    }
+
     /*
         Private helper methods
      */
@@ -55,8 +62,8 @@ public class CheckDeleteInteraction {
 
 
     private void leaveCheckedMode() {
-        this.mScreen.hideDeleteButton();
         this.hideMarker(mLastSelectedItemMarker);
+        this.mScreen.hideDeleteButton();
 
         this.mLastSelectedPosition = -1;
         this.mLastSelectedItemMarker = null;

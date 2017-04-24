@@ -5,7 +5,8 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-import lv.android.tsi.langbook.model.Dictionary;
+import lv.android.tsi.langbook.model.domain.Dictionary;
+import lv.android.tsi.langbook.screens.notes.presenter.NotesScreen;
 
 /**
  * Created by Natasa on 22.04.2017.
@@ -25,7 +26,8 @@ public interface DictionariesPresenter {
     void toggleDictionaryCheck(int position, ImageView marker);
     void resetCheck();
 
-
+    void initialize(DictionariesScreen screen);
+    void detachScreen();
 
 
 }

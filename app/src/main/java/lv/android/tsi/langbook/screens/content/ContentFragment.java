@@ -13,16 +13,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import javax.inject.Inject;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import lv.android.tsi.langbook.App;
 import lv.android.tsi.langbook.R;
+import lv.android.tsi.langbook.model.domain.Note;
 import lv.android.tsi.langbook.screens.content.presenter.ContentPresenter;
-import lv.android.tsi.langbook.screens.content.presenter.ContentPresenterImpl;
 import lv.android.tsi.langbook.screens.content.presenter.ContentScreen;
+import lv.android.tsi.langbook.utilities.Constants;
 
 import static lv.android.tsi.langbook.utilities.functions.DelayUtilities.makeVisibleAfterDelay;
 import static lv.android.tsi.langbook.utilities.functions.KeyboardUtilities.hideKeyboard;
@@ -32,6 +37,7 @@ public class ContentFragment extends Fragment implements ContentScreen{
 
     @BindView(R.id.content_text)     EditText mEditTextContext;
     @BindView(R.id.content_edit_fab) FloatingActionButton mBtnEdit;
+    @BindView(R.id.header_content_caption) TextView mNoteCaptionText;
 
     private ActionBar mActionBar;
 
@@ -40,7 +46,15 @@ public class ContentFragment extends Fragment implements ContentScreen{
 
     private Unbinder unbinder;
 
-    private ContentPresenter presenter;
+    @Inject ContentPresenter presenter;
+
+    public static ContentFragment newInstance(Note note){
+        Bundle args = new Bundle();
+        args.putSerializable(Constants.NOTE_EXTRA_KEY, note);
+        ContentFragment f = new ContentFragment();
+        f.setArguments(args);
+        return f;
+    }
 
 
     @Override
@@ -48,9 +62,15 @@ public class ContentFragment extends Fragment implements ContentScreen{
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_content, container, false);
+        ((App)getActivity().getApplication()).getAppComponent().inject(this);
         this.unbinder = ButterKnife.bind(this, view);
 
-        this.presenter = new ContentPresenterImpl(this);
+        Note note = (Note) getArguments().getSerializable(Constants.NOTE_EXTRA_KEY);
+
+        this.mNoteCaptionText.setText(note.getCaption());
+        this.mEditTextContext.setText(note.getContent());
+
+        this.presenter.initialize(this, note);
 
         this.mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         this.setHasOptionsMenu(true);
@@ -70,9 +90,12 @@ public class ContentFragment extends Fragment implements ContentScreen{
 
     @Override
     public void onDestroyView() {
-        this.presenter.reset();
-
         super.onDestroyView();
+
+        String content = mEditTextContext.getText().toString();
+
+        this.presenter.saveAndResetEditMode(content);
+        this.presenter.detachScreen();
         this.unbinder.unbind();
     }
 
@@ -81,7 +104,10 @@ public class ContentFragment extends Fragment implements ContentScreen{
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == android.R.id.home) this.presenter.performUpButtonClick();
+        if (id == android.R.id.home) {
+            String contentText = mEditTextContext.getText().toString();
+            this.presenter.performUpButtonClick(contentText);
+        }
         return true;
     }
 
@@ -111,6 +137,7 @@ public class ContentFragment extends Fragment implements ContentScreen{
     @Override
     public void setEditTextEditable() {
         mEditTextContext.setFocusableInTouchMode(true);
+        mEditTextContext.setLongClickable(true);
         showKeyBoard(getActivity(), mEditTextContext);
     }
 
@@ -119,6 +146,7 @@ public class ContentFragment extends Fragment implements ContentScreen{
         hideKeyboard(getActivity());
         mEditTextContext.clearFocus();
         mEditTextContext.setFocusable(false);
+        mEditTextContext.setLongClickable(false);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package lv.android.tsi.langbook.screens.notes.presenter;
 
-import lv.android.tsi.langbook.model.Note;
+import lv.android.tsi.langbook.model.domain.Note;
 import lv.android.tsi.langbook.interactions.CheckDeleteScreen;
 
 /**
@@ -17,4 +17,5 @@ public interface NotesScreen extends CheckDeleteScreen{
     void goToNoteContent(Note note);
 
     void goUpToDictionaryList();
+
 }
