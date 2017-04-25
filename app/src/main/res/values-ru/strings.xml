@@ -33,6 +33,7 @@
     <string name="pref_language_english">Английский</string>
     <string name="pref_language_russian">Русский</string>
     <string name="pref_language_title">Язык</string>
+    <string name="pref_toolbar_title">Настройки</string>
 
 
 </resources>

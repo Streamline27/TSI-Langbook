@@ -19,6 +19,6 @@ public interface AppComponent {
     void inject(NotesFragment fragment);
     void inject(DictionariesFragment fragment);
     void inject(ContentFragment fragment);
+    void inject(SettingsActivity.SettingsFragment fragment);
 
-    void inject(SettingsActivity activity);
 }
