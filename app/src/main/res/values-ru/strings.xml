@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Langbook</string>
+
+    <!-- Activity titles -->
+    <string name="title_fragment_dictionaries">Книги</string>
+    <string name="title_fragment_notes">Записи</string>
+    <string name="title_mode_edit">Редактирование</string>
+
+    <!-- Action bar button names -->
+    <string name="action_settings">Настройки</string>
+
+    <string name="action_add_dictionary">Добавить книгу</string>
+    <string name="action_add_note">Добавить запись</string>
+
+    <!-- AlertDialog strings -->
+    <string name="dialog_title_default">Создать новый экземпляр</string>
+    <string name="dialog_positive_caption">Создать</string>
+    <string name="dialog_negative_caption">Отмена</string>
+
+    <string name="dialog_title_dictionaries">Создать новую книгу</string>
+    <string name="dialog_title_notes">Создать новую запись</string>
+
+
+    <!-- For testing reasons -->
+    <string name="mockText">Он говорил на том изысканном французском языке, на котором не только говорили, но и думали наши деды, и с теми, тихими, покровительственными интонациями, которые свойственны состаревшемуся в свете и при дворе значительному человеку. Он подошел к Анне Павловне, поцеловал ее руку, подставив ей свою надушенную и сияющую лысину, и покойно уселся на диване.\n Он говорил на том изысканном французском языке, на котором не только говорили, но и думали наши деды, и с теми, тихими, покровительственными интонациями, которые свойственны состаревшемуся в свете и при дворе значительному человеку. Он подошел к Анне Павловне, поцеловал ее руку, подставив ей свою надушенную и сияющую лысину, и покойно уселся на диване. \n Он говорил на том изысканном французском языке, на котором не только говорили, но и думали наши деды, и с теми, тихими, покровительственными интонациями, которые свойственны состаревшемуся в свете и при дворе значительному человеку. Он подошел к Анне Павловне, поцеловал ее руку, подставив ей свою надушенную и сияющую лысину, и покойно уселся на диване. \n Он говорил на том изысканном французском языке, на котором не только говорили, но и думали наши деды, и с теми, тихими, покровительственными интонациями, которые свойственны состаревшемуся в свете и при дворе значительному человеку. Он подошел к Анне Павловне, поцеловал ее руку, подставив ей свою надушенную и сияющую лысину, и покойно уселся на диване.</string>
+    <string name="delete_dictionary">Удалить книгу</string>
+    <string name="dialog_delete_message">Вы уверены что хотите удалить этот экземпляр?</string>
+    <string name="dialog_delete_title">Удалить</string>
+    <string name="dialog_delete_confirm_text">Подтвердить</string>
+    <string name="dialog_delete_cancel_text">Отмена</string>
+
+    <!-- Preferences -->
+    <string name="pref_language_english">Английский</string>
+    <string name="pref_language_russian">Русский</string>
+    <string name="pref_language_title">Язык</string>
+
+
+</resources>
