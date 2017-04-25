@@ -10,4 +10,6 @@ public class Constants {
 
     public static final String CALLING_ACTIVITY_EXTRA = "calling_activity_extra";
 
+    public static final String SHARED_PREFERENCES_AVATAR_FILE_PATH = "avatar_file_path";
+
 }

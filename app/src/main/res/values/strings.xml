@@ -40,5 +40,9 @@
     <string name="pref_locale_ru">ru</string>
 
     <string name="pref_language_key">pref_language_key</string>
+    <string name="title_activity_test_drawer">TestDrawerActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 </resources>

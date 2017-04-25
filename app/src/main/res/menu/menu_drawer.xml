@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_action_load_img"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Load image" />
+        <item
+            android:id="@+id/nav_action_reset_img"
+            android:icon="@drawable/ic_action_refresh"
+            android:title="Reset image"
+            />
+    </group>
+
+    <item android:title="Netword">
+        <menu>
+            <item
+                android:id="@+id/nav_action_cloud_disable"
+                android:icon="@drawable/ic_action_cloud_disable"
+                android:title="Disable cloud" />
+            <item
+                android:id="@+id/nav_action_cloud_enable"
+                android:icon="@drawable/ic_action_cloud"
+                android:title="Enable cloud" />
+        </menu>
+    </item>
+
+</menu>

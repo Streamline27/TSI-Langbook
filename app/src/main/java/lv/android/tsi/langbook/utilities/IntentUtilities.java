@@ -22,4 +22,11 @@ public class IntentUtilities {
 
         return tweetIntent;
     }
+
+    public static Intent getImageRequestIntent(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        return intent;
+    }
 }
