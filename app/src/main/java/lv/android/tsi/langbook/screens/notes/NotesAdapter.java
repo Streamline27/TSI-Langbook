@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import lv.android.tsi.langbook.R;
 import lv.android.tsi.langbook.domain.Note;
 
@@ -30,11 +32,23 @@ public class NotesAdapter extends ArrayAdapter<Note> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View v = LayoutInflater.from(getContext()).inflate(R.layout.item_note, parent, false);
 
-        TextView captionText = (TextView) v.findViewById(R.id.item_note_caption);
-        captionText.setText(notes.get(position).getCaption());
+        if (convertView == null){
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_note, parent, false);
+            convertView.setTag(new ViewHolder(convertView));
+        }
+        ViewHolder h = (ViewHolder) convertView.getTag();
+        h.captionText.setText(notes.get(position).getCaption());
 
-        return v;
+        return convertView;
+    }
+
+    class ViewHolder{
+
+        @BindView(R.id.item_note_caption) TextView captionText;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }

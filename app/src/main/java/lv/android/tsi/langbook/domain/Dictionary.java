@@ -32,7 +32,7 @@ public class Dictionary implements Serializable{
         int dateIndex = cursor.getColumnIndex(DictionaryEntry.COLUMN_DATE);
         int idIndex = cursor.getColumnIndex(DictionaryEntry._ID);
 
-        this.id = idIndex;
+        this.id = cursor.getInt(idIndex);
         this.title = cursor.getString(titleIndex);
         this.creationDate = new Date(cursor.getLong(dateIndex));
     }

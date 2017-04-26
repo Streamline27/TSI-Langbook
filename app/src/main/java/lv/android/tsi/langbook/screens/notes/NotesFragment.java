@@ -119,12 +119,12 @@ public class NotesFragment extends Fragment implements NotesScreen{
 
     }
 
-    private void onConfirmDeleteClick(DialogInterface dialog, int which){
+    private void onConfirmDeleteDialogButtonClick(DialogInterface dialog, int which){
         this.presenter.deleteCheckedNote();
         this.presenter.resetCheck();
     }
 
-    private void onCreateDialogConfirmButtonClick(View view) {
+    private void onConfirmCreateDialogButtonClick(View view) {
         String text = ((EditText) view.findViewById(R.id.dialog_item_name_edit_text)).getText().toString();
         this.presenter.createNote(text);
     }
@@ -148,13 +148,13 @@ public class NotesFragment extends Fragment implements NotesScreen{
 
     @Override
     public void showCreateDialog() {
-        showCreateDialogWithCallback(getContext(), DIALOG_CREATE_NOTE_TITLE, this::onCreateDialogConfirmButtonClick);
+        showCreateDialogWithCallback(getContext(), DIALOG_CREATE_NOTE_TITLE, this::onConfirmCreateDialogButtonClick);
     }
 
 
     @Override
     public void showDeleteDialog() {
-        showDeleteDialogWithCallback(getContext(), this::onConfirmDeleteClick);
+        showDeleteDialogWithCallback(getContext(), this::onConfirmDeleteDialogButtonClick);
     }
 
     @Override

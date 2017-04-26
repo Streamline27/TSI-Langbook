@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import lv.android.tsi.langbook.R;
 import lv.android.tsi.langbook.domain.Dictionary;
 
@@ -31,12 +33,24 @@ public class DictionariesAdapter extends ArrayAdapter<Dictionary> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.item_dictionary, parent, false);
 
-        TextView captionText = (TextView) view.findViewById(R.id.item_dictionary_caption);
-        captionText.setText(dictionaries.get(position).getTitle());
+        if (convertView == null){
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_dictionary, parent, false);
+            convertView.setTag(new ViewHolder(convertView));
+        }
+        ViewHolder h = (ViewHolder) convertView.getTag();
+        h.captionText.setText(dictionaries.get(position).getTitle());
 
-        return view;
+        return convertView;
+    }
+
+    class ViewHolder{
+
+        @BindView(R.id.item_dictionary_caption) TextView captionText;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
 
