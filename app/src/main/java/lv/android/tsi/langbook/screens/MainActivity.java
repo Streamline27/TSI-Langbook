@@ -1,7 +1,6 @@
 package lv.android.tsi.langbook.screens;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -43,9 +42,14 @@ public class MainActivity extends AppCompatActivity implements OnDictionarySelec
     @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
     @BindView(R.id.drawer_content) NavigationView mNavigationView;
 
+    private MenuItem mDrawerItemEnableCloud;
+    private MenuItem mDrawerItemDisableCloud;
+
+    private final String FRAGMENT_TAG = "dictionaries_fragment_tag";
 
     /* TODO: add presenter to all of this */
     /* TODO: Refactor this for godness sake */
+    // TODO: This stuff is reeeeeaaaalllly messy REFACTOR IT */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +71,14 @@ public class MainActivity extends AppCompatActivity implements OnDictionarySelec
         if (!avatarFilePath.equals("")) setDrawerHeaderAvatar(ImageUtilities.loadImage(this, avatarFilePath));
 
         mNavigationView.setNavigationItemSelectedListener(this::onNavigationItemSelected);
+
+        Menu drawerMenu = mNavigationView.getMenu();
+        mDrawerItemDisableCloud = drawerMenu.findItem(R.id.nav_action_cloud_disable);
+        mDrawerItemEnableCloud =  drawerMenu.findItem(R.id.nav_action_cloud_enable);
+
+        getFragmentManager().beginTransaction()
+                .add(R.id.dictionaties_fragment_container, new DictionariesFragment(), FRAGMENT_TAG)
+                .commit();
     }
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -85,11 +97,21 @@ public class MainActivity extends AppCompatActivity implements OnDictionarySelec
         }
         if (id == R.id.nav_action_cloud_enable){
             ((App)getApplication()).setCloudModeOn();
-            restartActivity();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.dictionaties_fragment_container, new DictionariesFragment(), FRAGMENT_TAG)
+                    .commit();
+            mDrawerLayout.closeDrawers();
+            mDrawerItemDisableCloud.setVisible(true);
+            mDrawerItemEnableCloud.setVisible(false);
         }
         if (id == R.id.nav_action_cloud_disable){
             ((App)getApplication()).setCloudModeOff();
-            restartActivity();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.dictionaties_fragment_container, new DictionariesFragment(), FRAGMENT_TAG)
+                    .commit();
+            mDrawerLayout.closeDrawers();
+            mDrawerItemDisableCloud.setVisible(false);
+            mDrawerItemEnableCloud.setVisible(true);
         }
 
         return false;
@@ -121,6 +143,8 @@ public class MainActivity extends AppCompatActivity implements OnDictionarySelec
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_dictionaries, menu);
+
+
         return false;
     }
 
@@ -151,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements OnDictionarySelec
             mDrawerLayout.closeDrawer(GravityCompat.START);
         }
         else {
-            DictionariesFragment fragment = (DictionariesFragment)getSupportFragmentManager().findFragmentById(R.id.dictionaries_fragment);
+            DictionariesFragment fragment = (DictionariesFragment)getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
             fragment.resetCheck();
             super.onBackPressed();
         }

@@ -23,13 +23,11 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
 
-
-    <fragment
-        android:id="@+id/dictionaries_fragment"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="lv.android.tsi.langbook.screens.dictionaries.DictionariesFragment">
+        android:id="@+id/dictionaties_fragment_container">
+    </FrameLayout>
 
-    </fragment>
 
 </LinearLayout>

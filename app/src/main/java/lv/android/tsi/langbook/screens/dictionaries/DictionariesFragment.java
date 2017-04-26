@@ -1,8 +1,8 @@
 package lv.android.tsi.langbook.screens.dictionaries;
 
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -70,7 +69,7 @@ public class DictionariesFragment extends Fragment implements DictionariesScreen
 
     @Override
     public void displayFetchedData(List<Dictionary> dictionaries){
-        this.mAdapter = new DictionariesAdapter(getContext(), dictionaries);
+        this.mAdapter = new DictionariesAdapter(getActivity(), dictionaries);
         this.mdDctionariesListView.setAdapter(mAdapter);
         this.mAdapter.notifyDataSetChanged();
     }
@@ -126,12 +125,12 @@ public class DictionariesFragment extends Fragment implements DictionariesScreen
 
     @Override
     public void showCreateDialog() {
-        showCreateDialogWithCallback(getContext(), CREATE_DICTIONARY_DIALOG_TITLE, this::onConfirmCreateClick);
+        showCreateDialogWithCallback(getActivity(), CREATE_DICTIONARY_DIALOG_TITLE, this::onConfirmCreateClick);
     }
 
     @Override
     public void showDeleteDialog() {
-        showDeleteDialogWithCallback(getContext(), this::onConfirmDeleteClick);
+        showDeleteDialogWithCallback(getActivity(), this::onConfirmDeleteClick);
     }
 
     @Override
