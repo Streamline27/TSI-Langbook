@@ -36,10 +36,10 @@
     <string name="pref_language_title">Language</string>
     <string name="pref_toolbar_title">Settings</string>
 
-    <string name="pref_locale_en">en_US</string>
-    <string name="pref_locale_ru">ru</string>
+    <string name="pref_locale_en" translatable="false">en_US</string>
+    <string name="pref_locale_ru" translatable="false">ru</string>
 
-    <string name="pref_language_key">pref_language_key</string>
+    <string name="pref_language_key" translatable="false">pref_language_key</string>
 
     <!-- Navigation drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
