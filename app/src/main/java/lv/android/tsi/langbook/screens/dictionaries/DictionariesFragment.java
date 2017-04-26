@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindString;
@@ -51,20 +54,25 @@ public class DictionariesFragment extends Fragment implements DictionariesScreen
         View view = inflater.inflate(R.layout.fragment_dictionaries, container, false);
 
         this.unbinder = ButterKnife.bind(this, view);
-        ((App)getActivity().getApplication()).getAppComponent().inject(this);
 
+        ((App)getActivity().getApplication()).getAppComponent().inject(this);
         this.presenter.initialize(this);
 
-        this.mAdapter = new DictionariesAdapter(getContext(), presenter.getDictionaries());
-
-        this.mdDctionariesListView.setAdapter(mAdapter);
         this.mdDctionariesListView.setOnItemClickListener(this::onItemClick);
         this.mdDctionariesListView.setOnItemLongClickListener(this::onItemLongClick);
+
 
         setHasOptionsMenu(true);
 
         return view;
 
+    }
+
+    @Override
+    public void displayFetchedData(List<Dictionary> dictionaries){
+        this.mAdapter = new DictionariesAdapter(getContext(), dictionaries);
+        this.mdDctionariesListView.setAdapter(mAdapter);
+        this.mAdapter.notifyDataSetChanged();
     }
 
     @Override

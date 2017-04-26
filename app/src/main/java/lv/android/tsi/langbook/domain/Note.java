@@ -25,6 +25,9 @@ public class Note implements Serializable {
 
     private long dictionaryId;
 
+    Note() {
+    }
+
     public Note(String caption, long dictionaryId) {
         this.caption = caption;
         this.dictionaryId = dictionaryId;
@@ -56,10 +59,6 @@ public class Note implements Serializable {
         this.caption = caption;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
     public String getContent()
     {
         if (content == null) return "";
@@ -70,9 +69,6 @@ public class Note implements Serializable {
         this.content = content;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
 
     public long getDictionaryId() {
         return dictionaryId;
@@ -86,7 +82,7 @@ public class Note implements Serializable {
         this.creationDate = new Date(creationDate);
     }
 
-    public long getCreationDateLong(){
+    public long getCreationDate(){
         return creationDate.getTime();
     }
 
@@ -102,7 +98,7 @@ public class Note implements Serializable {
         ContentValues v = new ContentValues();
 
         v.put(NoteEntry.COLUMN_CAPTION, caption);
-        v.put(NoteEntry.COLUMN_DATE, getCreationDateLong());
+        v.put(NoteEntry.COLUMN_DATE, getCreationDate());
         v.put(NoteEntry.COLUMN_CONTENT, content);
         if (dictionaryId != -1) v.put(NoteEntry.COLUMN_DICTIONARY_ID_FK, dictionaryId);
         if (id != -1) v.put(NoteEntry._ID, id);

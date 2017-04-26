@@ -35,8 +35,12 @@ public class NotesPresenterImpl implements NotesPresenter {
     public void initialize(NotesScreen screen, Dictionary dictionary) {
         this.screen = screen;
         this.checkDeleteInteraction.attachScreen(screen);
-        this.notes = model.getNotes(dictionary);
         this.dictionary = dictionary;
+
+        this.model.getNotes(dictionary, notes -> {
+            this.notes = notes;
+            this.screen.displayFetchedData(notes);
+        });
     }
 
     @Override
@@ -45,11 +49,6 @@ public class NotesPresenterImpl implements NotesPresenter {
         this.checkDeleteInteraction.detachScreen();
         this.notes = null;
         this.dictionary = null;
-    }
-
-    @Override
-    public List<Note> getNotes() {
-        return this.notes;
     }
 
     @Override
@@ -76,7 +75,7 @@ public class NotesPresenterImpl implements NotesPresenter {
             model.deleteNote(notes.get(position));
             notes.remove(position);
         }
-        this.screen.refreshNotesList();
+        this.screen.refreshNotesAdapterList();
     }
 
     @Override
@@ -102,6 +101,8 @@ public class NotesPresenterImpl implements NotesPresenter {
         long id = model.addNote(note);
         note.setId(id);
         notes.add(note);
+
+        this.screen.refreshNotesAdapterList();
     }
 
     @Override

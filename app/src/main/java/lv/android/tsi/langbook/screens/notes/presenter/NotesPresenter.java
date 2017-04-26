@@ -13,8 +13,6 @@ import lv.android.tsi.langbook.domain.Note;
 
 public interface NotesPresenter {
 
-    List<Note> getNotes();
-
     void performUpButtonClick();
     void performMenuCreateClick();
     void performMenuDeleteClick();

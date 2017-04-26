@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import lv.android.tsi.langbook.modules.AppComponent;
 import lv.android.tsi.langbook.modules.AppModule;
 import lv.android.tsi.langbook.modules.DaggerAppComponent;
+import lv.android.tsi.langbook.modules.StorageOption;
 
 import static lv.android.tsi.langbook.utilities.LanguageUtils.setPreferedLanguage;
 
@@ -23,7 +24,7 @@ public class App extends Application {
         super.onCreate();
 
         mAppComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
+                .appModule(new AppModule(this, StorageOption.SQLITE))
                 .build();
 
         setPreferedLanguage(this, PreferenceManager.getDefaultSharedPreferences(this));
@@ -31,5 +32,17 @@ public class App extends Application {
 
     public AppComponent getAppComponent(){
         return mAppComponent;
+    }
+
+    public void setCloudModeOn(){
+        mAppComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(this, StorageOption.FIREBASE))
+                .build();
+    }
+
+    public void setCloudModeOff(){
+        mAppComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(this, StorageOption.SQLITE))
+                .build();
     }
 }

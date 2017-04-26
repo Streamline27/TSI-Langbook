@@ -9,7 +9,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import lv.android.tsi.langbook.interactions.CheckDeleteInteraction;
-import lv.android.tsi.langbook.model.DatabaseModel;
+import lv.android.tsi.langbook.model.FirebaseModel;
+import lv.android.tsi.langbook.model.SQLiteModel;
 import lv.android.tsi.langbook.model.Model;
 import lv.android.tsi.langbook.screens.content.presenter.ContentPresenter;
 import lv.android.tsi.langbook.screens.content.presenter.ContentPresenterImpl;
@@ -26,9 +27,19 @@ import lv.android.tsi.langbook.screens.notes.presenter.NotesPresenterImpl;
 public class AppModule {
 
     private Application mApplication;
+    private StorageOption storageOption;
 
-    public AppModule(Application mApplication) {
+    public AppModule(Application mApplication, StorageOption storageOption) {
         this.mApplication = mApplication;
+        this.storageOption = storageOption;
+    }
+
+    @Provides
+    @Singleton
+    public Model providesModel(Application application){
+        if (storageOption == StorageOption.SQLITE)   return new SQLiteModel(application);
+        if (storageOption == StorageOption.FIREBASE) return new FirebaseModel();
+        return null;
     }
 
     @Provides
@@ -37,11 +48,6 @@ public class AppModule {
         return PreferenceManager.getDefaultSharedPreferences(application);
     }
 
-    @Provides
-    @Singleton
-    Model providesModel(Application application){
-        return new DatabaseModel(application);
-    }
 
     @Provides
     @Singleton

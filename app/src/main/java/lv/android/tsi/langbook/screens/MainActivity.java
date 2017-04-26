@@ -24,6 +24,7 @@ import java.io.IOException;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import lv.android.tsi.langbook.App;
 import lv.android.tsi.langbook.R;
 import lv.android.tsi.langbook.domain.Dictionary;
 import lv.android.tsi.langbook.screens.dictionaries.DictionariesFragment;
@@ -82,8 +83,22 @@ public class MainActivity extends AppCompatActivity implements OnDictionarySelec
                     .putString(Constants.SHARED_PREFERENCES_AVATAR_FILE_PATH, "")
                     .apply();
         }
+        if (id == R.id.nav_action_cloud_enable){
+            ((App)getApplication()).setCloudModeOn();
+            restartActivity();
+        }
+        if (id == R.id.nav_action_cloud_disable){
+            ((App)getApplication()).setCloudModeOff();
+            restartActivity();
+        }
 
         return false;
+    }
+
+    private void restartActivity() {
+        Intent i = new Intent(this, MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
 
     @Override

@@ -60,5 +60,11 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         }
+
+        @Override
+        public void onDestroy() {
+            PreferenceManager.getDefaultSharedPreferences(getActivity()).unregisterOnSharedPreferenceChangeListener(this);
+            super.onDestroy();
+        }
     }
 }

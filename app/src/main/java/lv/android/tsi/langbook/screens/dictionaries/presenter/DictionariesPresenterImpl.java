@@ -2,6 +2,7 @@ package lv.android.tsi.langbook.screens.dictionaries.presenter;
 
 import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lv.android.tsi.langbook.model.Model;
@@ -23,15 +24,20 @@ public class DictionariesPresenterImpl implements DictionariesPresenter{
 
     public DictionariesPresenterImpl(Model model) {
         this.checkDeleteInteraction = new CheckDeleteInteraction();
-        this.dictionaries = model.getDictionaries();
+        this.dictionaries = new ArrayList<>();
         this.model = model;
-
     }
+
 
     @Override
     public void initialize(DictionariesScreen screen) {
         this.screen = screen;
         this.checkDeleteInteraction.attachScreen(screen);
+
+        model.getDictionaries(dictionaries -> {
+            this.dictionaries = dictionaries;
+            this.screen.displayFetchedData(dictionaries);
+        });
     }
 
     @Override
@@ -64,6 +70,8 @@ public class DictionariesPresenterImpl implements DictionariesPresenter{
         screen.refreshDictionariesList();
     }
 
+
+
     @Override
     public void performMenuCreateClick() {
         screen.showCreateDialog();
@@ -72,11 +80,6 @@ public class DictionariesPresenterImpl implements DictionariesPresenter{
     @Override
     public void preformMenuDeleteClick() {
         screen.showDeleteDialog();
-    }
-
-    @Override
-    public List<Dictionary> getDictionaries() {
-        return dictionaries;
     }
 
     @Override

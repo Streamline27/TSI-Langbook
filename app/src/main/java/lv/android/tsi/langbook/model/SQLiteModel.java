@@ -19,16 +19,16 @@ import lv.android.tsi.langbook.model.database.DatabaseContract.NoteEntry;
  * Created by Natasa on 24.04.2017.
  */
 
-public class DatabaseModel implements Model {
+public class SQLiteModel implements Model {
 
     private Context mContext;
 
-    public DatabaseModel(Context context) {
+    public SQLiteModel(Context context) {
         this.mContext = context;
     }
 
     @Override
-    public List<Note> getNotes(Dictionary dictionary) {
+    public void getNotes(Dictionary dictionary, OnNotesFetchedCallback callback) {
         SQLiteDatabase db = new DatabaseHelper(mContext).getReadableDatabase();
 
         String[] args = getArgs(Long.toString(dictionary.getId()));
@@ -50,11 +50,11 @@ public class DatabaseModel implements Model {
         }
         c.close();
 
-        return notes;
+        callback.apply(notes);
     }
 
     @Override
-    public List<Dictionary> getDictionaries() {
+    public void getDictionaries(OnDictionariesFetchedCallback callback) {
         SQLiteDatabase db = new DatabaseHelper(mContext).getReadableDatabase();
 
         Cursor c = db.rawQuery("SELECT * FROM " + DictionaryEntry.TABLE_NAME, null);
@@ -68,7 +68,7 @@ public class DatabaseModel implements Model {
         }
         c.close();
 
-        return dictionaries;
+        callback.apply(dictionaries);
     }
 
     @Override

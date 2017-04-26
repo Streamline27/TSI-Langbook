@@ -18,7 +18,7 @@ import java.io.IOException;
 public class ImageUtilities {
     /**
      *
-     * @return AbsoulutePath + fileName + .png
+     * @return AbsoulutePath + fileName
      */
     public static String saveImage(Context ctx, Bitmap image, String fileName){
         ContextWrapper cw = new ContextWrapper(ctx);

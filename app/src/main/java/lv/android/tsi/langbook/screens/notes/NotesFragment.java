@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindString;
@@ -67,20 +70,27 @@ public class NotesFragment extends Fragment implements NotesScreen{
         this.unbinder = ButterKnife.bind(this, view);
         ((App)getActivity().getApplication()).getAppComponent().inject(this);
 
-
-        this.presenter.initialize(this, dictionary);
-
-        this.mAdapter = new NotesAdapter(getContext(), this.presenter.getNotes());
-
         this.mNotesListView.addHeaderView(listViewHeader, null, false);
+
         this.mNotesListView.setOnItemClickListener(this::onItemClick);
         this.mNotesListView.setOnItemLongClickListener(this::onItemLongClick);
-        this.mNotesListView.setAdapter(mAdapter);
+
+        this.presenter.initialize(this, dictionary);
 
         setHasOptionsMenu(true);
 
         return view;
     }
+
+
+    @Override
+    public void displayFetchedData(List<Note> notes) {
+        this.mAdapter = new NotesAdapter(getContext(), notes);
+        this.mNotesListView.setAdapter(mAdapter);
+
+    }
+
+
 
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         position -= 1; // This solves first element header issue
@@ -136,6 +146,7 @@ public class NotesFragment extends Fragment implements NotesScreen{
 
     /* Notes screen specific behaviour */
 
+
     @Override
     public void showDeleteButton() {
         mDeleteMenuItem.setVisible(true);
@@ -158,7 +169,7 @@ public class NotesFragment extends Fragment implements NotesScreen{
     }
 
     @Override
-    public void refreshNotesList() {
+    public void refreshNotesAdapterList() {
         this.mAdapter.notifyDataSetChanged();
     }
 

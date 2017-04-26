@@ -13,8 +13,6 @@ import lv.android.tsi.langbook.domain.Dictionary;
 
 public interface DictionariesPresenter {
 
-    List<Dictionary> getDictionaries();
-
     void performMenuCreateClick();
     void preformMenuDeleteClick();
     void performSelectDictionaryClick(int position);
@@ -27,6 +25,4 @@ public interface DictionariesPresenter {
 
     void initialize(DictionariesScreen screen);
     void detachScreen();
-
-
 }

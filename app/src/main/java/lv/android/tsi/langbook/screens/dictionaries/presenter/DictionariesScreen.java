@@ -1,5 +1,7 @@
 package lv.android.tsi.langbook.screens.dictionaries.presenter;
 
+import java.util.List;
+
 import lv.android.tsi.langbook.domain.Dictionary;
 import lv.android.tsi.langbook.interactions.CheckDeleteScreen;
 
@@ -16,4 +18,5 @@ public interface DictionariesScreen extends CheckDeleteScreen{
 
     void goToDictionaryNotes(Dictionary dictionary);
 
+    void displayFetchedData(List<Dictionary> dictionaries);
 }

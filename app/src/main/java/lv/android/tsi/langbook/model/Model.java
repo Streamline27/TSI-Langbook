@@ -11,8 +11,8 @@ import lv.android.tsi.langbook.domain.Note;
 
 public interface Model {
 
-    List<Note> getNotes(Dictionary dictionary);
-    List<Dictionary> getDictionaries();
+    void getNotes(Dictionary dictionary, OnNotesFetchedCallback callback);
+    void getDictionaries(OnDictionariesFetchedCallback callback);
 
     long addNote(Note note);
     long addDictionary(Dictionary dictionary);
@@ -21,5 +21,14 @@ public interface Model {
     void deleteDictionary(Dictionary dictionary);
 
     void updateNote(Note note);
+
+
+    public interface OnDictionariesFetchedCallback {
+        void apply(List<Dictionary> dictionaries);
+    }
+
+    public interface OnNotesFetchedCallback {
+        void apply(List<Note> notes);
+    }
 
 }

@@ -21,6 +21,9 @@ public class Dictionary implements Serializable{
 
     private Date creationDate;
 
+    Dictionary() {
+    }
+
     public Dictionary(String title) {
         this.title = title;
         this.creationDate = new Date();
@@ -45,15 +48,8 @@ public class Dictionary implements Serializable{
         this.title = title;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
-    }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public long getCreationDateLong() {
+    public long getCreationDate() {
         return creationDate.getTime();
     }
 
@@ -72,7 +68,7 @@ public class Dictionary implements Serializable{
     public ContentValues toContentValues(){
         ContentValues v = new ContentValues();
 
-        v.put(DictionaryEntry.COLUMN_DATE, getCreationDateLong());
+        v.put(DictionaryEntry.COLUMN_DATE, getCreationDate());
         v.put(DictionaryEntry.COLUMN_TITLE, title);
         if (id != -1) v.put(DictionaryEntry._ID, id);
 
