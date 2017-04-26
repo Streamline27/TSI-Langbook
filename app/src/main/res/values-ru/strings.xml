@@ -35,5 +35,15 @@
     <string name="pref_language_title">Язык</string>
     <string name="pref_toolbar_title">Настройки</string>
 
+    <!-- Navigation drawer -->
+    <string name="navigation_drawer_open">Открыть всплывающее меню</string>
+    <string name="navigation_drawer_close">Закрыть всплывающее меню</string>
+    <string name="drawer_load_image">Загрузить изображение</string>
+    <string name="drawer_reset_image">Обнулить изображение</string>
+    <string name="drawer_netword_submenu">Облачное хранилище</string>
+    <string name="drawer_disable_cloud">Деактивировать</string>
+    <string name="drawer_enable_cloud">Активировать</string>
+
+
 
 </resources>

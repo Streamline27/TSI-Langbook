@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnDictionarySelec
     /* TODO: add presenter to all of this */
     /* TODO: Refactor this for godness sake */
     // TODO: This stuff is reeeeeaaaalllly messy REFACTOR IT */
+    /* TODO: refactor this... */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +76,11 @@ public class MainActivity extends AppCompatActivity implements OnDictionarySelec
         Menu drawerMenu = mNavigationView.getMenu();
         mDrawerItemDisableCloud = drawerMenu.findItem(R.id.nav_action_cloud_disable);
         mDrawerItemEnableCloud =  drawerMenu.findItem(R.id.nav_action_cloud_enable);
+
+        if (((App)getApplication()).isCloudModeEnabled()) {
+            mDrawerItemDisableCloud.setVisible(true);
+            mDrawerItemEnableCloud.setVisible(false);
+        }
 
         getFragmentManager().beginTransaction()
                 .add(R.id.dictionaties_fragment_container, new DictionariesFragment(), FRAGMENT_TAG)

@@ -40,9 +40,14 @@
     <string name="pref_locale_ru">ru</string>
 
     <string name="pref_language_key">pref_language_key</string>
-    <string name="title_activity_test_drawer">TestDrawerActivity</string>
 
+    <!-- Navigation drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="drawer_load_image">Load image</string>
+    <string name="drawer_reset_image">Reset image</string>
+    <string name="drawer_netword_submenu">Netword</string>
+    <string name="drawer_disable_cloud">Disable cloud</string>
+    <string name="drawer_enable_cloud">Enable cloud</string>
 
 </resources>

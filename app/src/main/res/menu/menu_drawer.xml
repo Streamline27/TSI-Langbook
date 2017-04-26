@@ -5,25 +5,25 @@
         <item
             android:id="@+id/nav_action_load_img"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Load image" />
+            android:title="@string/drawer_load_image" />
         <item
             android:id="@+id/nav_action_reset_img"
             android:icon="@drawable/ic_action_refresh"
-            android:title="Reset image"
+            android:title="@string/drawer_reset_image"
             />
     </group>
 
-    <item android:title="Netword">
+    <item android:title="@string/drawer_netword_submenu">
         <menu>
             <item
                 android:id="@+id/nav_action_cloud_disable"
                 android:icon="@drawable/ic_action_cloud_disable"
                 android:visible="false"
-                android:title="Disable cloud" />
+                android:title="@string/drawer_disable_cloud" />
             <item
                 android:id="@+id/nav_action_cloud_enable"
                 android:icon="@drawable/ic_action_cloud"
-                android:title="Enable cloud" />
+                android:title="@string/drawer_enable_cloud" />
         </menu>
     </item>
 

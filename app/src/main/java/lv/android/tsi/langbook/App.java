@@ -18,6 +18,7 @@ import static lv.android.tsi.langbook.utilities.LanguageUtils.setPreferedLanguag
 public class App extends Application {
 
     private AppComponent mAppComponent;
+    private boolean cloudModeEnabled = false;
 
     @Override
     public void onCreate() {
@@ -38,11 +39,17 @@ public class App extends Application {
         mAppComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this, StorageOption.FIREBASE))
                 .build();
+        cloudModeEnabled = true;
     }
 
     public void setCloudModeOff(){
         mAppComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this, StorageOption.SQLITE))
                 .build();
+        cloudModeEnabled = false;
+    }
+
+    public boolean isCloudModeEnabled(){
+        return cloudModeEnabled;
     }
 }
