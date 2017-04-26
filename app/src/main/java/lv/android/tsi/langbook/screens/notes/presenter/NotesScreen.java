@@ -22,4 +22,7 @@ public interface NotesScreen extends CheckDeleteScreen{
 
     void goUpToDictionaryList();
 
+    void changeListViewToSpinner();
+    void changeSpinnerToListView();
+
 }

@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class DictionariesFragment extends Fragment implements DictionariesScreen
     @BindString(R.string.dialog_title_dictionaries) String CREATE_DICTIONARY_DIALOG_TITLE;
 
     @BindView(R.id.dictionaries_list_view) ListView mdDctionariesListView;
+    @BindView(R.id.progress_spinner) ProgressBar mProgressSpinner;
+
     private Unbinder unbinder;
 
     @Inject DictionariesPresenter presenter;
@@ -122,6 +125,18 @@ public class DictionariesFragment extends Fragment implements DictionariesScreen
     }
 
     /* Dictionaries screen specific behaviour */
+
+    @Override
+    public void changeListViewToSpinner() {
+        mdDctionariesListView.setVisibility(View.GONE);
+        mProgressSpinner.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void changeSpinnerToListView() {
+        mProgressSpinner.setVisibility(View.GONE);
+        mdDctionariesListView.setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void showCreateDialog() {

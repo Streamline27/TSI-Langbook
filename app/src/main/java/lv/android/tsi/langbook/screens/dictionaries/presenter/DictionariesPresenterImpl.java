@@ -1,5 +1,6 @@
 package lv.android.tsi.langbook.screens.dictionaries.presenter;
 
+import android.os.Handler;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -34,9 +35,20 @@ public class DictionariesPresenterImpl implements DictionariesPresenter{
         this.screen = screen;
         this.checkDeleteInteraction.attachScreen(screen);
 
+        // Show spinner if there is no data for 200 milliseconds
+        final boolean[] spinnerWasShown = {false};
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            screen.changeListViewToSpinner();
+            spinnerWasShown[0] = true;
+        }, 30);
+
         model.getDictionaries(dictionaries -> {
             this.dictionaries = dictionaries;
             this.screen.displayFetchedData(dictionaries);
+
+            if (spinnerWasShown[0]) screen.changeSpinnerToListView();
+            else handler.removeCallbacksAndMessages(null);
         });
     }
 

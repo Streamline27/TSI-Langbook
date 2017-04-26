@@ -1,5 +1,6 @@
 package lv.android.tsi.langbook.screens.notes.presenter;
 
+import android.os.Handler;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -37,9 +38,22 @@ public class NotesPresenterImpl implements NotesPresenter {
         this.checkDeleteInteraction.attachScreen(screen);
         this.dictionary = dictionary;
 
+        // Todo : Make cleaner solution
+        // Show spinner if there is no data for 200 milliseconds
+        final boolean[] spinnerWasShown = {false};
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            screen.changeListViewToSpinner();
+            spinnerWasShown[0] = true;
+        }, 30);
+
         this.model.getNotes(dictionary, notes -> {
             this.notes = notes;
             this.screen.displayFetchedData(notes);
+
+            // Clear handler if there is no need for spinner
+            if (spinnerWasShown[0]) screen.changeSpinnerToListView();
+            else handler.removeCallbacksAndMessages(null);
         });
     }
 

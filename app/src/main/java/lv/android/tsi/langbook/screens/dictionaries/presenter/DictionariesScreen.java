@@ -19,4 +19,7 @@ public interface DictionariesScreen extends CheckDeleteScreen{
     void goToDictionaryNotes(Dictionary dictionary);
 
     void displayFetchedData(List<Dictionary> dictionaries);
+
+    void changeListViewToSpinner();
+    void changeSpinnerToListView();
 }

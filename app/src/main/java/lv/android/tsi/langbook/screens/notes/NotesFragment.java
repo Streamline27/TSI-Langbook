@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -40,7 +41,11 @@ public class NotesFragment extends Fragment implements NotesScreen{
     @BindString(R.string.dialog_title_notes) String DIALOG_CREATE_NOTE_TITLE;
 
     @BindView(R.id.notes_list_view) ListView mNotesListView;
+    @BindView(R.id.progress_spinner)
+    ProgressBar mProgressSpinner;
+
     private Unbinder unbinder;
+
 
     private MenuItem mDeleteMenuItem;
 
@@ -146,6 +151,17 @@ public class NotesFragment extends Fragment implements NotesScreen{
 
     /* Notes screen specific behaviour */
 
+    @Override
+    public void changeListViewToSpinner() {
+        mNotesListView.setVisibility(View.GONE);
+        mProgressSpinner.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void changeSpinnerToListView() {
+        mProgressSpinner.setVisibility(View.GONE);
+        mNotesListView.setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void showDeleteButton() {

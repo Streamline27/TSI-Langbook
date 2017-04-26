@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "665399167366",
+    "firebase_url": "https://langbook-tsi.firebaseio.com",
+    "project_id": "langbook-tsi",
+    "storage_bucket": "langbook-tsi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665399167366:android:8296876a5cd3f6da",
+        "android_client_info": {
+          "package_name": "lv.android.tsi.langbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "665399167366-a5i1fvu1d8ljummnoc88briighnvo6m2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKjCKpSF81QQiZYKJ6jJIRDqWD6hl__wM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
